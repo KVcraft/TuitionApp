@@ -18,8 +18,8 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:src="@drawable/ic_back"
-            android:tint="#FFFFFF"
-            android:contentDescription="Back" />
+            android:contentDescription="Back"
+            app:tint="#FFFFFF" />
     </LinearLayout>
 
     <!-- Add Student Button -->
