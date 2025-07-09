@@ -1,15 +1,14 @@
 package com.example.tuitionapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.widget.Toolbar;
-
+import androidx.drawerlayout.widget.DrawerLayout;
 import com.google.android.material.navigation.NavigationView;
 
 public class TeacherActivity extends AppCompatActivity {
-
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
 
@@ -23,19 +22,18 @@ public class TeacherActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // Hamburger icon toggle
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawerLayout, toolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        // Menu item click handling
         navigationView.setNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
-            if (id == R.id.nav_dashboard) {
-                // handle dashboard
+            if (id == R.id.nav_attendance) {
+                startActivity(new Intent(this, AttendanceFilterActivity.class));
             } else if (id == R.id.nav_logout) {
-                // handle logout
+                // Handle logout
             }
             drawerLayout.closeDrawers();
             return true;

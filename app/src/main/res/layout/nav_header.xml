@@ -3,16 +3,14 @@
     android:layout_height="160dp"
     android:gravity="center_vertical"
     android:orientation="vertical"
-    android:padding="16dp"
-    android:background="@android:color/transparent">
+    android:background="@android:color/transparent"
+    android:padding="16dp">
 
     <TextView
         android:id="@+id/nav_header_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Teacher"
-        android:layout_marginTop="40dp"
-        android:layout_marginLeft="10dp"
         android:textColor="@android:color/white"
         android:textSize="20sp"
         android:textStyle="bold"/>
