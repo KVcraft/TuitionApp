@@ -1,5 +1,5 @@
 # Default ignored files
 /shelf/
 /workspace.xml
-app/build.gradle.kts
+/app/build.gradle.kts
 /gradle.xml
