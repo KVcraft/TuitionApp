@@ -1,19 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <!-- Gradient Background -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/blue_gradient" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- Content centered vertically and horizontally -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="32dp">
+
+        <!-- App Title -->
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="MindFlex"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:textColor="#000000" />
+
+        <!-- Subtitle -->
+        <TextView
+            android:id="@+id/tvSubtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Flex like a genius"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="40dp" />
+
+        <!-- Student Button -->
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Student"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:background="@drawable/white_rounded_btn"
+            android:padding="12dp"
+            android:layout_marginBottom="20dp"
+            android:elevation="0dp"
+            android:stateListAnimator="@null" />
+
+
+        <!-- Teacher Button -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Teacher"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:background="@drawable/white_rounded_btn"
+            android:padding="12dp"
+            android:layout_marginBottom="20dp"
+            android:elevation="0dp"
+            android:stateListAnimator="@null" />
+
+
+        <!-- Admin Button -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Administrator"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:background="@drawable/white_rounded_btn"
+            android:padding="12dp"
+            android:layout_marginBottom="20dp"
+            android:elevation="0dp"
+            android:stateListAnimator="@null" />
+
+    </LinearLayout>
+</RelativeLayout>
