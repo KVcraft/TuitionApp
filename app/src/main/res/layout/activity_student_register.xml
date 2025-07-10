@@ -9,9 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:gravity="center_horizontal"
-
-        >
+        android:gravity="center_horizontal">
 
 
         <!-- Top Gradient Header -->
@@ -104,22 +102,22 @@
                 android:padding="12dp" />
         </LinearLayout>
 
-            <!-- Courses-->
+        <!-- Courses-->
 
         <LinearLayout
-                android:layout_width="200dp"
-                android:layout_height="60dp"
-                android:layout_marginBottom="12dp"
-                android:padding="12dp">
+            android:layout_width="200dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="12dp"
+            android:padding="12dp">
 
-                <TextView
-                    android:id="@+id/txtCourse"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
-                    android:text="Select Course(s)"
-                    android:textStyle="bold"
-                    android:textSize="@dimen/heading_fisize"/>
+            <TextView
+                android:id="@+id/txtCourse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:text="Select Course(s)"
+                android:textStyle="bold"
+                android:textSize="@dimen/heading_fisize"/>
 
         </LinearLayout>
 
@@ -130,15 +128,15 @@
             android:orientation="horizontal"
             android:padding="12dp">
 
-                <TextView
-                    android:id="@+id/txtBio"
-                    android:textSize="@dimen/default_fsize"
-                    android:layout_height="30dp"
-                    android:layout_width="match_parent"
-                    android:layout_alignBottom="@id/txtCourse"
-                    android:layout_marginBottom="12dp"
-                    android:text="Biology"
-                    />
+            <TextView
+                android:id="@+id/txtBio"
+                android:textSize="@dimen/default_fsize"
+                android:layout_height="30dp"
+                android:layout_width="match_parent"
+                android:layout_alignBottom="@id/txtCourse"
+                android:layout_marginBottom="12dp"
+                android:text="Biology"
+                />
 
             <CheckBox
                 android:layout_width="50dp"
@@ -154,13 +152,13 @@
             android:layout_marginBottom="12dp"
             android:padding="12dp">
 
-                <TextView
-                    android:id="@+id/txtMath"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:textSize="@dimen/default_fsize"
-                    android:layout_marginBottom="12dp"
-                    android:text="Combined Maths" />
+            <TextView
+                android:id="@+id/txtMath"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:textSize="@dimen/default_fsize"
+                android:layout_marginBottom="12dp"
+                android:text="Combined Maths" />
 
             <CheckBox
                 android:layout_width="50dp"
@@ -176,13 +174,13 @@
             android:layout_marginBottom="12dp"
             android:padding="12dp">
 
-                <TextView
-                    android:id="@+id/txtPhys"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:textSize="@dimen/default_fsize"
-                    android:layout_marginBottom="12dp"
-                    android:text="Physics" />
+            <TextView
+                android:id="@+id/txtPhys"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:textSize="@dimen/default_fsize"
+                android:layout_marginBottom="12dp"
+                android:text="Physics" />
 
             <CheckBox
                 android:layout_width="50dp"
@@ -200,13 +198,13 @@
             android:layout_marginBottom="12dp"
             android:padding="12dp">
 
-                <TextView
-                    android:id="@+id/txtChem"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:textSize="@dimen/default_fsize"
-                    android:layout_marginBottom="12dp"
-                    android:text="Chemistry" />
+            <TextView
+                android:id="@+id/txtChem"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:textSize="@dimen/default_fsize"
+                android:layout_marginBottom="12dp"
+                android:text="Chemistry" />
 
             <CheckBox
                 android:layout_width="50dp"
@@ -222,13 +220,13 @@
             android:layout_marginBottom="12dp"
             android:padding="12dp">
 
-                    <TextView
-                        android:id="@+id/txtICT"
-                        android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:textSize="@dimen/default_fsize"
-                        android:layout_marginBottom="12dp"
-                        android:text="ICT" />
+            <TextView
+                android:id="@+id/txtICT"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:textSize="@dimen/default_fsize"
+                android:layout_marginBottom="12dp"
+                android:text="ICT" />
 
             <CheckBox
                 android:layout_width="50dp"
@@ -244,13 +242,13 @@
             android:layout_marginBottom="12dp"
             android:padding="12dp">
 
-                <TextView
-                    android:id="@+id/txtBS"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:textSize="@dimen/default_fsize"
-                    android:layout_marginBottom="12dp"
-                    android:text="Business Studies" />
+            <TextView
+                android:id="@+id/txtBS"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:textSize="@dimen/default_fsize"
+                android:layout_marginBottom="12dp"
+                android:text="Business Studies" />
 
             <CheckBox
                 android:layout_width="50dp"
@@ -266,13 +264,13 @@
             android:layout_marginBottom="12dp"
             android:padding="12dp">
 
-                <TextView
-                    android:id="@+id/txtEcon"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:textSize="@dimen/default_fsize"
-                    android:layout_marginBottom="12dp"
-                    android:text="Economics" />
+            <TextView
+                android:id="@+id/txtEcon"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:textSize="@dimen/default_fsize"
+                android:layout_marginBottom="12dp"
+                android:text="Economics" />
 
             <CheckBox
                 android:layout_width="50dp"
@@ -288,13 +286,13 @@
             android:layout_marginBottom="12dp"
             android:padding="12dp">
 
-                <TextView
-                    android:id="@+id/txtAcc"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:textSize="@dimen/default_fsize"
-                    android:layout_marginBottom="12dp"
-                    android:text="Accounting" />
+            <TextView
+                android:id="@+id/txtAcc"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:textSize="@dimen/default_fsize"
+                android:layout_marginBottom="12dp"
+                android:text="Accounting" />
 
             <CheckBox
                 android:layout_width="50dp"
@@ -310,13 +308,13 @@
             android:layout_marginBottom="12dp"
             android:padding="12dp">
 
-                <TextView
-                    android:id="@+id/txtEng"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:textSize="@dimen/default_fsize"
-                    android:layout_marginBottom="12dp"
-                    android:text="English" />
+            <TextView
+                android:id="@+id/txtEng"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:textSize="@dimen/default_fsize"
+                android:layout_marginBottom="12dp"
+                android:text="English" />
 
             <CheckBox
                 android:layout_width="50dp"
@@ -332,13 +330,13 @@
             android:layout_marginBottom="12dp"
             android:padding="12dp">
 
-                <TextView
-                    android:id="@+id/txtFrench"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:textSize="@dimen/default_fsize"
-                    android:layout_marginBottom="12dp"
-                    android:text="French" />
+            <TextView
+                android:id="@+id/txtFrench"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:textSize="@dimen/default_fsize"
+                android:layout_marginBottom="12dp"
+                android:text="French" />
 
             <CheckBox
                 android:layout_width="50dp"
@@ -354,13 +352,13 @@
             android:layout_marginBottom="12dp"
             android:padding="12dp">
 
-                <TextView
-                    android:id="@+id/txtLit"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:textSize="@dimen/default_fsize"
-                    android:layout_marginBottom="12dp"
-                    android:text="English Literature" />
+            <TextView
+                android:id="@+id/txtLit"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:textSize="@dimen/default_fsize"
+                android:layout_marginBottom="12dp"
+                android:text="English Literature" />
 
             <CheckBox
                 android:layout_width="50dp"
