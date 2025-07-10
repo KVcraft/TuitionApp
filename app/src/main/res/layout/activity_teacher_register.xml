@@ -19,16 +19,35 @@
             android:gravity="center">
 
             <!-- Circular Insert Photo Button -->
-            <TextView
+            <FrameLayout
+                android:id="@+id/photo_frame"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:background="@drawable/circle_gray"
-                android:gravity="center"
-                android:text="Insert\nphoto"
-                android:textColor="#FFFFFF"
-                android:textStyle="bold"
-                android:textAlignment="center"
-                android:lineSpacingExtra="4dp" />
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="onPhotoClick">
+
+                <ImageView
+                    android:id="@+id/photo_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/photo_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Insert\nphoto"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:textAlignment="center"
+                    android:lineSpacingExtra="4dp" />
+            </FrameLayout>
+
+
         </LinearLayout>
 
         <!-- Input Fields -->
@@ -43,6 +62,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/rounded_edittext"
+                android:id="@+id/first_name"
                 android:hint="First Name"
                 android:padding="12dp"
                 android:layout_marginBottom="12dp"
@@ -52,6 +72,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/rounded_edittext"
+                android:id="@+id/last_name"
                 android:hint="Last Name"
                 android:padding="12dp"
                 android:layout_marginBottom="12dp"
@@ -61,6 +82,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/rounded_edittext"
+                android:id="@+id/nic"
                 android:hint="NIC"
                 android:padding="12dp"
                 android:layout_marginBottom="12dp"
@@ -70,6 +92,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/rounded_edittext"
+                android:id="@+id/email"
                 android:hint="Email"
                 android:padding="12dp"
                 android:layout_marginBottom="12dp"
@@ -79,6 +102,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/rounded_edittext"
+                android:id="@+id/password"
                 android:hint="Password"
                 android:inputType="textPassword"
                 android:padding="12dp"
@@ -89,6 +113,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/rounded_edittext"
+                android:id="@+id/confirm_password"
                 android:hint="Confirm Password"
                 android:inputType="textPassword"
                 android:padding="12dp"
@@ -99,6 +124,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/rounded_edittext"
+                android:id="@+id/contact"
                 android:hint="Contact No"
                 android:inputType="phone"
                 android:padding="12dp"
@@ -109,6 +135,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/rounded_edittext"
+                android:id="@+id/address"
                 android:hint="Address"
                 android:padding="12dp"
                 android:layout_marginBottom="12dp"
@@ -118,6 +145,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/rounded_edittext"
+                android:id="@+id/course"
                 android:hint="Course"
                 android:padding="12dp"
                 android:layout_marginBottom="12dp"
@@ -131,9 +159,11 @@
                 android:elevation="0dp"
                 android:padding="12dp"
                 android:stateListAnimator="@null"
+                android:id="@+id/btnRegister"
                 android:text="Register"
                 android:textColor="#FFFFFF"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:onClick="onRegisterClick"/>
         </LinearLayout>
 
         <!-- Bottom Gradient Section -->
