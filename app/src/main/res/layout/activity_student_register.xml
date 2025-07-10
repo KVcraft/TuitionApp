@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/stud_reg"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="#FFFFFF">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
 
         <!-- Top Gradient Header -->
         <LinearLayout
@@ -33,72 +36,348 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:orientation="vertical"
-            android:padding="20dp"
-            android:gravity="center_horizontal">
+            android:layout_marginBottom="70dp"
+            android:paddingTop="30dp">
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:layout_marginBottom="12dp"
                 android:background="@drawable/rounded_edittext"
                 android:hint="First Name"
-                android:padding="12dp"
-                android:layout_marginBottom="12dp" />
+                android:padding="12dp" />
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:layout_marginBottom="12dp"
                 android:background="@drawable/rounded_edittext"
                 android:hint="Last Name"
-                android:padding="12dp"
-                android:layout_marginBottom="12dp" />
+                android:padding="12dp" />
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:layout_marginBottom="12dp"
                 android:background="@drawable/rounded_edittext"
                 android:hint="Email"
-                android:padding="12dp"
-                android:layout_marginBottom="12dp" />
+                android:padding="12dp" />
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:layout_marginBottom="12dp"
                 android:background="@drawable/rounded_edittext"
                 android:hint="Password"
                 android:inputType="textPassword"
-                android:padding="12dp"
-                android:layout_marginBottom="12dp" />
+                android:padding="12dp" />
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:layout_marginBottom="12dp"
                 android:background="@drawable/rounded_edittext"
                 android:hint="Confirm Password"
                 android:inputType="textPassword"
-                android:padding="12dp"
-                android:layout_marginBottom="12dp" />
+                android:padding="12dp" />
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:layout_marginBottom="12dp"
                 android:background="@drawable/rounded_edittext"
                 android:hint="Contact No"
                 android:inputType="phone"
-                android:padding="12dp"
-                android:layout_marginBottom="12dp" />
+                android:padding="12dp" />
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:layout_marginBottom="12dp"
+                android:paddingBottom="20dp"
                 android:background="@drawable/rounded_edittext"
                 android:hint="Address"
-                android:padding="12dp"
-                android:layout_marginBottom="12dp" />
+                android:padding="12dp" />
+        </LinearLayout>
+
+        <!-- Courses-->
+
+        <LinearLayout
+            android:layout_width="200dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="12dp"
+            android:padding="12dp">
+
+            <TextView
+                android:id="@+id/txtCourse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:text="Select Course(s)"
+                android:textStyle="bold"
+                android:textSize="@dimen/heading_fisize"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginBottom="12dp"
+            android:orientation="horizontal"
+            android:padding="12dp">
+
+            <TextView
+                android:id="@+id/txtBio"
+                android:textSize="@dimen/default_fsize"
+                android:layout_height="30dp"
+                android:layout_width="match_parent"
+                android:layout_alignBottom="@id/txtCourse"
+                android:layout_marginBottom="12dp"
+                android:text="Biology"
+                />
+
+            <CheckBox
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="120dp"
+                android:id="@+id/chkBio"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginBottom="12dp"
+            android:padding="12dp">
+
+            <TextView
+                android:id="@+id/txtMath"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:textSize="@dimen/default_fsize"
+                android:layout_marginBottom="12dp"
+                android:text="Combined Maths" />
+
+            <CheckBox
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="43dp"
+                android:id="@+id/chkMath"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginBottom="12dp"
+            android:padding="12dp">
+
+            <TextView
+                android:id="@+id/txtPhys"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:textSize="@dimen/default_fsize"
+                android:layout_marginBottom="12dp"
+                android:text="Physics" />
+
+            <CheckBox
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="120dp"
+                android:id="@+id/chkPhys"/>
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginBottom="12dp"
+            android:padding="12dp">
+
+            <TextView
+                android:id="@+id/txtChem"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:textSize="@dimen/default_fsize"
+                android:layout_marginBottom="12dp"
+                android:text="Chemistry" />
+
+            <CheckBox
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="102dp"
+                android:id="@+id/chkChem"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginBottom="12dp"
+            android:padding="12dp">
+
+            <TextView
+                android:id="@+id/txtICT"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:textSize="@dimen/default_fsize"
+                android:layout_marginBottom="12dp"
+                android:text="ICT" />
+
+            <CheckBox
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="155dp"
+                android:id="@+id/chkICT"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginBottom="12dp"
+            android:padding="12dp">
+
+            <TextView
+                android:id="@+id/txtBS"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:textSize="@dimen/default_fsize"
+                android:layout_marginBottom="12dp"
+                android:text="Business Studies" />
+
+            <CheckBox
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="47dp"
+                android:id="@+id/chkBS"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginBottom="12dp"
+            android:padding="12dp">
+
+            <TextView
+                android:id="@+id/txtEcon"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:textSize="@dimen/default_fsize"
+                android:layout_marginBottom="12dp"
+                android:text="Economics" />
+
+            <CheckBox
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="96dp"
+                android:id="@+id/chkEcon"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginBottom="12dp"
+            android:padding="12dp">
+
+            <TextView
+                android:id="@+id/txtAcc"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:textSize="@dimen/default_fsize"
+                android:layout_marginBottom="12dp"
+                android:text="Accounting" />
+
+            <CheckBox
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="95dp"
+                android:id="@+id/chkAcc"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginBottom="12dp"
+            android:padding="12dp">
+
+            <TextView
+                android:id="@+id/txtEng"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:textSize="@dimen/default_fsize"
+                android:layout_marginBottom="12dp"
+                android:text="English" />
+
+            <CheckBox
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="127dp"
+                android:id="@+id/chkEng"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginBottom="12dp"
+            android:padding="12dp">
+
+            <TextView
+                android:id="@+id/txtFrench"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:textSize="@dimen/default_fsize"
+                android:layout_marginBottom="12dp"
+                android:text="French" />
+
+            <CheckBox
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="129dp"
+                android:id="@+id/chkFrench"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginBottom="12dp"
+            android:padding="12dp">
+
+            <TextView
+                android:id="@+id/txtLit"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:textSize="@dimen/default_fsize"
+                android:layout_marginBottom="12dp"
+                android:text="English Literature" />
+
+            <CheckBox
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="45dp"
+                android:id="@+id/chkLit"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="80dp"
+            android:layout_marginBottom="12dp"
+            android:padding="12dp"
+            android:gravity="center_horizontal">
 
             <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="228dp"
-                android:layout_height="63dp"
+                android:layout_height="60dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/dark_blue"
                 android:elevation="0dp"
