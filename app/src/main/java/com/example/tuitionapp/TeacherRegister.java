@@ -22,7 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-public class TeacherRegisterActivity extends AppCompatActivity {
+public class TeacherRegister extends AppCompatActivity {
     EditText firstName, lastName, nic, email, password, confirmPassword, contact, address, course;
     Button registerBtn;
 
