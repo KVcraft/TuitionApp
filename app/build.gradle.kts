@@ -30,6 +30,9 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
@@ -49,7 +52,8 @@ dependencies {
 
     //  Firebase Auth (optional)
     implementation("com.google.firebase:firebase-auth:22.3.0")
-
+    implementation(libs.navigation.fragment)
+    implementation(libs.navigation.ui)
 
 
     // Test dependencies

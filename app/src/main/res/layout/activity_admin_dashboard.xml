@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#FFFFFF"
-    android:id="@+id/adminDash">
+    android:id="@+id/admin_dash">
 
     <!-- Top Gradient Section -->
     <LinearLayout
