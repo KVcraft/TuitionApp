@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "881260170040",
+    "project_id": "tution-app-a2da8",
+    "storage_bucket": "tution-app-a2da8.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:881260170040:android:d9df042eaf36a996770fcd",
+        "android_client_info": {
+          "package_name": "com.example.tuitionapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJ4EastV8nTaEXi07OfFuamtSClUSczLE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
