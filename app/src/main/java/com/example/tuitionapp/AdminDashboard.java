@@ -1,5 +1,6 @@
 package com.example.tuitionapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -55,20 +56,23 @@ public class AdminDashboard extends AppCompatActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem item){
         int id = item.getItemId();
 
-        if (id == R.id.admin_nav_dash) {
+        if (id == R.id.nav_dashboard) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new DashboardFragment()).commit();
-        } else if (id == R.id.admin_nav_students) {
+        } else if (id == R.id.nav_students) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new StudentsFragment()).commit();
-        } else if (id == R.id.admin_nav_teachers) {
+        } else if (id == R.id.nav_teachers) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new TeachersFragment()).commit();
-        } else if (id == R.id.admin_nav_attendance) {
+        } else if (id == R.id.nav_attendance) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AttendanceFragment()).commit();
-        } else if (id == R.id.admin_nav_results) {
+        } else if (id == R.id.nav_results) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ResultsFragment()).commit();
-        } else if (id == R.id.admin_nav_reports) {
+        } else if (id == R.id.nav_reports) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ReportsFragment()).commit();
-        } else if (id == R.id.admin_nav_profile) {
+        } else if (id == R.id.nav_profile) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AdminProfileFragment()).commit();
+        } else if (id == R.id.nav_logout){
+            Intent intent = new Intent(this, AdminLogin.class);
+            startActivity(intent);
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);
