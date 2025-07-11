@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.MenuItem;
 
-
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -27,8 +26,8 @@ public class AdminDashboard extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_admin_dashboard);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.admin_nav_dash), (v, insets) -> {
+        setContentView(R.layout.admin_navigation);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.admin_nav), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
@@ -37,7 +36,7 @@ public class AdminDashboard extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        drawerLayout = findViewById(R.id.drawer_layout);
+        drawerLayout = findViewById(R.id.admin_nav);
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
