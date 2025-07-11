@@ -2,11 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
-
-    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false" />
 
     <application
         android:allowBackup="true"
@@ -19,15 +22,17 @@
         android:theme="@style/Theme.TuitionApp"
         tools:targetApi="31">
         <activity
+            android:name=".TeacherRegister"
+            android:exported="true" />
+        <activity
             android:name=".AdminRegister"
             android:exported="false" />
-        <activity android:name=".TeacherRegisterActivity" />
         <activity
             android:name=".AdminDashboard"
             android:exported="false" />
         <activity
             android:name=".StudentRegister"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".AdminLogin"
             android:exported="false" />
