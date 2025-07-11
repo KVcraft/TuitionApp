@@ -4,10 +4,10 @@
             android:icon="@drawable/ic_dashboard"
             android:title="Dashboard"/>
         <item android:id="@+id/nav_students"
-            android:icon="@drawable/ic_materials"
+            android:icon="@drawable/ic_student"
             android:title="Students"/>
         <item android:id="@+id/nav_teachers"
-            android:icon="@drawable/ic_attendance"
+            android:icon="@drawable/ic_teacher"
             android:title="Teachers"/>
         <item android:id="@+id/nav_attendance"
             android:icon="@drawable/ic_attendance"
@@ -16,10 +16,10 @@
             android:icon="@drawable/ic_assignments"
             android:title="Results"/>
         <item android:id="@+id/nav_reports"
-            android:icon="@drawable/ic_profile"
+            android:icon="@drawable/ic_result"
             android:title="Reports"/>
         <item android:id="@+id/nav_profile"
-            android:icon="@drawable/ic_logout"
+            android:icon="@drawable/ic_profile"
             android:title="Profile"/>
         <item android:id="@+id/nav_logout"
             android:icon="@drawable/ic_logout"

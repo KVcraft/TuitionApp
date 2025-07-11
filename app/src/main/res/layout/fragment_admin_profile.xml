@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ReportsFragment">
+    tools:context=".AdminProfileFragment"
+    android:id="@+id/admin_nav_profile">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
