@@ -36,5 +36,9 @@ public class AdminLogin extends AppCompatActivity {
         startActivity(intent);
     }
 
-
+    //Go to SignUp page
+    public void SignUp (View view){
+        Intent intent = new Intent(this, AdminRegister.class);
+        startActivity(intent);
+    }
 }

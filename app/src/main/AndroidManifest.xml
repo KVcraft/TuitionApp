@@ -19,20 +19,22 @@
         android:theme="@style/Theme.TuitionApp"
         tools:targetApi="31">
         <activity
-            android:name=".StudentAssignmentsActivity"
-            android:exported="true" />
+            android:name=".AdminNav"
+            android:exported="false"
+            android:theme="@style/Theme.TuitionApp" />
         <activity
-            android:name=".StudentAttendanceActivity"
-            android:exported="true" />
+            android:name=".AdminNavigation"
+            android:exported="false"
+            android:theme="@style/Theme.TuitionApp" />
         <activity
-            android:name=".TeacherRegisterActivity"
+            android:name=".TeacherRegister"
             android:exported="true" />
         <activity
             android:name=".AdminDashboard"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".StudentRegister"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".AdminLogin"
             android:exported="false" />
