@@ -19,6 +19,12 @@
         android:theme="@style/Theme.TuitionApp"
         tools:targetApi="31">
         <activity
+            android:name=".TeacherLogin"
+            android:exported="true" />
+        <activity
+            android:name=".StudentLogin"
+            android:exported="false" />
+        <activity
             android:name=".TeacherDashboard"
             android:exported="true"
             android:theme="@style/Theme.TuitionApp" />
