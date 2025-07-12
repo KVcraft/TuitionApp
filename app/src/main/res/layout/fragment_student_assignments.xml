@@ -1,14 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/assignmentFragmentLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F5F5F5"
     tools:context=".StudentAssignmentsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <!-- Header -->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="100dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:background="@drawable/blue_gradient">
 
-</FrameLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Assignment Submission"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- Content Area -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <!-- Student ID -->
+            <EditText
+                android:id="@+id/editTextStudentId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter student ID"
+                android:background="@drawable/rounded_edittext"
+                android:padding="12dp"
+                android:layout_marginBottom="12dp" />
+
+            <!-- Class -->
+            <EditText
+                android:id="@+id/editTextClass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter class"
+                android:background="@drawable/rounded_edittext"
+                android:padding="12dp"
+                android:layout_marginBottom="12dp" />
+
+            <!-- Assignment Title -->
+            <EditText
+                android:id="@+id/editTextAssignmentTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Assignment title"
+                android:background="@drawable/rounded_edittext"
+                android:padding="12dp"
+                android:layout_marginBottom="12dp" />
+
+            <!-- Attach Button -->
+            <Button
+                android:id="@+id/buttonAttachAssignment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Attach Assignment"
+                android:background="@drawable/dark_blue"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:layout_marginBottom="12dp" />
+
+            <!-- Selected File Name -->
+            <TextView
+                android:id="@+id/textSelectedFile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="No file selected"
+                android:background="@drawable/rounded_edittext"
+                android:padding="12dp"
+                android:textColor="#888888"
+                android:layout_marginBottom="24dp" />
+
+            <!-- Upload Button -->
+            <Button
+                android:id="@+id/buttonUploadAssignment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Upload Assignment"
+                android:background="@android:color/holo_green_dark"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:layout_marginBottom="20dp" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Footer (Optional) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@drawable/blue_gradient"
+        android:gravity="center" />
+
+</LinearLayout>

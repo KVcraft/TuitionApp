@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class CourseMaterialsActivity extends AppCompatActivity {
+public class ViewCourseMaterial extends AppCompatActivity {
 
     ExpandableListView expandableListView;
     CourseExpandableListAdapter adapter;
