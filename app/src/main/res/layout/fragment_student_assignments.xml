@@ -46,7 +46,9 @@
                 android:hint="Enter student ID"
                 android:background="@drawable/rounded_edittext"
                 android:padding="12dp"
-                android:layout_marginBottom="12dp" />
+                android:layout_marginBottom="12dp"
+                android:textColorHint="#919191"
+                android:textColor="@color/black"/>
 
             <!-- Class -->
             <EditText
@@ -56,7 +58,9 @@
                 android:hint="Enter class"
                 android:background="@drawable/rounded_edittext"
                 android:padding="12dp"
-                android:layout_marginBottom="12dp" />
+                android:layout_marginBottom="12dp"
+                android:textColorHint="#919191"
+                android:textColor="@color/black"/>
 
             <!-- Assignment Title -->
             <EditText
@@ -66,7 +70,9 @@
                 android:hint="Assignment title"
                 android:background="@drawable/rounded_edittext"
                 android:padding="12dp"
-                android:layout_marginBottom="12dp" />
+                android:layout_marginBottom="12dp"
+                android:textColorHint="#919191"
+                android:textColor="@color/black"/>
 
             <!-- Attach Button -->
             <Button

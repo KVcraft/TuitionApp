@@ -426,7 +426,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // New table required:
 // CREATE TABLE Student_Assignments (id INTEGER PRIMARY KEY AUTOINCREMENT, student_id TEXT, class TEXT, title TEXT, file_name TEXT);
 
-    public long saveAssignment(String studentId, String studentClass, String title, String fileName) {
+    public long saveAssignment(String studentId, String studentClass, String title, String fileName, String submissionDate, String string) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("student_id", studentId);
