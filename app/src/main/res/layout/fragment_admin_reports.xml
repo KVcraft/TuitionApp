@@ -4,12 +4,37 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AdminReportsFragment"
-    android:id="@+id/admin_nav_reports">
+    android:id="@+id/admin_nav_reports"
+    android:background="#FFFF">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Reports Title -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reports"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Reports Display Area -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/reportsContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:padding="8dp"/>
+        </ScrollView>
+    </LinearLayout>
 
 </FrameLayout>
