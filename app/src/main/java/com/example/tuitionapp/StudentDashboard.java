@@ -70,6 +70,9 @@ implements NavigationView.OnNavigationItemSelectedListener {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new StudentQRFragment()).commit();
         } else if (id == R.id.stud_nav_profile) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new StudentProfileFragment()).commit();
+        } else if (id == R.id.stud_nav_notifications) {
+            // NEW LINE for Notifications
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new StudentNotificationFragment()).commit();
         } else if (id == R.id.stud_nav_logout){
             Intent intent = new Intent(this, AdminLogin.class);
             startActivity(intent);
@@ -78,6 +81,7 @@ implements NavigationView.OnNavigationItemSelectedListener {
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
+
 
     @Override
     public void onBackPressed(){

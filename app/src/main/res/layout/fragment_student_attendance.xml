@@ -1,14 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/stu_attendance"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".StudentAttendanceFragment">
+    tools:context=".StudentAttendanceActivity"
+    android:background="#FFFFFF">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <!-- Scrollable Content -->
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:overScrollMode="never"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/bottomSection"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-</FrameLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="16dp">
+
+            <!-- Header -->
+            <TextView
+                android:id="@+id/tvAttendanceTitle"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:text="Attendance"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:padding="12dp"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/top_rounded_gradient" />
+
+            <!-- RecyclerView to display attendance -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerAttendance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:nestedScrollingEnabled="false"
+                android:scrollbars="vertical" />
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Bottom Section Pinned to Bottom -->
+    <LinearLayout
+        android:id="@+id/bottomSection"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:background="@drawable/bottom_rounded_gradient"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

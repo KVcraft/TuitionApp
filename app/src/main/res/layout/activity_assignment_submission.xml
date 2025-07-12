@@ -1,31 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/assignmentFragmentLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#F5F5F5"
-    tools:context=".StudentAssignmentsFragment">
+    android:background="#FFFFFF"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <!-- Header -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:background="@drawable/blue_gradient">
+        android:background="@drawable/blue_gradient"
+        android:gravity="center">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="Assignment Submission"
             android:textColor="#FFFFFF"
+            android:textStyle="bold"
             android:textSize="24sp"
-            android:textStyle="bold" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
-    <!-- Content Area -->
+    <!-- Scrollable Form -->
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -33,16 +29,16 @@
         android:fillViewport="true">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="20dp">
+            android:padding="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <!-- Student ID -->
             <EditText
                 android:id="@+id/editTextStudentId"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:hint="Enter student ID"
                 android:background="@drawable/rounded_edittext"
                 android:padding="12dp"
@@ -52,7 +48,7 @@
             <EditText
                 android:id="@+id/editTextClass"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:hint="Enter class"
                 android:background="@drawable/rounded_edittext"
                 android:padding="12dp"
@@ -62,52 +58,91 @@
             <EditText
                 android:id="@+id/editTextAssignmentTitle"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Assignment title"
+                android:layout_height="50dp"
+                android:hint="Title"
                 android:background="@drawable/rounded_edittext"
                 android:padding="12dp"
                 android:layout_marginBottom="12dp" />
 
-            <!-- Attach Button -->
+            <!-- Attach Assignment -->
             <Button
                 android:id="@+id/buttonAttachAssignment"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:text="Attach Assignment"
                 android:background="@drawable/dark_blue"
                 android:textColor="#FFFFFF"
                 android:textStyle="bold"
                 android:layout_marginBottom="12dp" />
 
-            <!-- Selected File Name -->
+            <!-- Selected File Display -->
             <TextView
                 android:id="@+id/textSelectedFile"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="100dp"
+                android:gravity="center_vertical"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
                 android:text="No file selected"
-                android:background="@drawable/rounded_edittext"
-                android:padding="12dp"
                 android:textColor="#888888"
+                android:background="@drawable/rounded_edittext"
                 android:layout_marginBottom="24dp" />
 
-            <!-- Upload Button -->
+
+            <!-- Uploaded File Preview -->
+            <LinearLayout
+                android:id="@+id/layoutUploadedFile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="12dp"
+                android:gravity="center_vertical"
+                android:background="@drawable/rounded_edittext"
+                android:visibility="gone"
+                android:layout_marginBottom="12dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@android:drawable/ic_menu_agenda"
+                    android:tint="#000000"
+                    android:layout_marginEnd="8dp" />
+
+                <TextView
+                    android:id="@+id/textViewFileName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="filename.pdf"
+                    android:textColor="#000000"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/buttonViewFile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="View"
+                    android:textColor="#FFFFFF"
+                    android:backgroundTint="@drawable/blue_btn" />
+            </LinearLayout>
+
+            <!-- Upload Assignment -->
             <Button
                 android:id="@+id/buttonUploadAssignment"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:text="Upload Assignment"
                 android:background="@android:color/holo_green_dark"
                 android:textColor="#FFFFFF"
                 android:textStyle="bold"
-                android:layout_marginBottom="20dp" />
+                android:layout_marginBottom="12dp" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <!-- Footer (Optional) -->
+    <!-- Bottom Footer -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="100dp"
         android:background="@drawable/blue_gradient"
         android:gravity="center" />
-
 </LinearLayout>

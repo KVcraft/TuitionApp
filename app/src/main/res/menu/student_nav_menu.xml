@@ -18,6 +18,12 @@
         <item android:id="@+id/stud_nav_qr"
             android:icon="@drawable/ic_qr"
             android:title="QR Code"/>
+
+        <item
+            android:id="@+id/stud_nav_notifications"
+            android:title="Notifications"
+            android:icon="@drawable/ic_notification" />
+
         <item android:id="@+id/stud_nav_profile"
             android:icon="@drawable/ic_profile"
             android:title="Profile"/>
