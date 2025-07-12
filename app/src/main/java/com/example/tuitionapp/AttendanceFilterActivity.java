@@ -117,7 +117,7 @@ public class AttendanceFilterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attendance_filter);
 
-        sessionSpinner = findViewById(R.id.sessionSpinner);
+        /*sessionSpinner = findViewById(R.id.sessionSpinner);*/
         dateEditText = findViewById(R.id.dateEditText);
         timeEditText = findViewById(R.id.timeEditText);
         submitButton = findViewById(R.id.submitButton);
