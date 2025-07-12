@@ -453,6 +453,64 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
+    public boolean checkStudentCredentials(String email, String password) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_STUDENTS,
+                new String[]{COLUMN_ID},
+                COLUMN_EMAIL + " = ? AND " + COLUMN_PASSWORD + " = ?",
+                new String[]{email, password},
+                null, null, null);
+
+        boolean exists = cursor.getCount() > 0;
+        cursor.close();
+        db.close();
+        return exists;
+    }
+
+    public int getStudentIdByEmail(String email, String password) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        int studentId = -1;
+
+        Cursor cursor = db.query(TABLE_STUDENTS,
+                new String[]{COLUMN_ID},
+                COLUMN_EMAIL + " = ? AND " + COLUMN_PASSWORD + " = ?",
+                new String[]{email, password},
+                null, null, null);
+
+        if (cursor.moveToFirst()) {
+            studentId = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID));
+        }
+
+        cursor.close();
+        db.close();
+        return studentId;
+    }
+
+    public Cursor getStudentByEmail(String email) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM students WHERE email = ?", new String[]{email});
+    }
+
+    public Teacher getTeacherByEmail(String email) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM teachers WHERE email = ?", new String[]{email});
+
+        if (cursor != null && cursor.moveToFirst()) {
+            Teacher teacher = new Teacher(
+                    cursor.getString(cursor.getColumnIndexOrThrow("first_name")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("last_name")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("nic")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("email")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("contact")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("address")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("course"))
+            );
+            cursor.close();
+            return teacher;
+        }
+
+        return null;
+    }
 
 
 }
