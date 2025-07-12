@@ -381,4 +381,40 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return courses;
     }
+
+    public boolean checkAdminCredentials(String email, String password) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] columns = {COLUMN_ADMIN_ID};
+        String selection = COLUMN_ADMIN_EMAIL + " = ? AND " + COLUMN_ADMIN_PASSWORD + " = ?";
+        String[] selectionArgs = {email, password};
+
+        Cursor cursor = db.query(TABLE_ADMINS,
+                columns,
+                selection,
+                selectionArgs,
+                null, null, null);
+
+        boolean exists = cursor.getCount() > 0;
+        cursor.close();
+        db.close();
+        return exists;
+    }
+
+    // New table required:
+// CREATE TABLE Student_Assignments (id INTEGER PRIMARY KEY AUTOINCREMENT, student_id TEXT, class TEXT, title TEXT, file_name TEXT);
+
+    public long saveAssignment(String studentId, String studentClass, String title, String fileName) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("student_id", studentId);
+        values.put("class", studentClass);
+        values.put("title", title);
+        values.put("file_name", fileName);
+
+        long id = db.insert("Student_Assignments", null, values);
+        db.close();
+        return id;
+    }
+
+
 }

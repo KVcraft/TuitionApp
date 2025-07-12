@@ -19,15 +19,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
-
-import java.util.HashMap;
-import java.util.Map;
-
 public class StudentAssignmentsFragment extends Fragment {
 
     private static final int PICK_PDF_CODE = 100;
@@ -37,9 +28,9 @@ public class StudentAssignmentsFragment extends Fragment {
     private Button buttonAttach, buttonUpload;
 
     private Uri selectedFileUri;
+    private String selectedFileName;
 
-    private DatabaseReference dbRef;
-    private StorageReference storageRef;
+    private DatabaseHelper dbHelper;
 
     public StudentAssignmentsFragment() {}
 
@@ -60,8 +51,7 @@ public class StudentAssignmentsFragment extends Fragment {
         buttonAttach = view.findViewById(R.id.buttonAttachAssignment);
         buttonUpload = view.findViewById(R.id.buttonUploadAssignment);
 
-        dbRef = FirebaseDatabase.getInstance().getReference("student_assignments");
-        storageRef = FirebaseStorage.getInstance().getReference("student_assignments");
+        dbHelper = new DatabaseHelper(requireContext());
 
         buttonAttach.setOnClickListener(v -> openFileChooser());
 
@@ -70,7 +60,7 @@ public class StudentAssignmentsFragment extends Fragment {
                 Toast.makeText(getContext(), "Please select a file first", Toast.LENGTH_SHORT).show();
                 return;
             }
-            uploadAssignment();
+            saveAssignmentToSQLite();
         });
     }
 
@@ -87,42 +77,34 @@ public class StudentAssignmentsFragment extends Fragment {
 
         if (requestCode == PICK_PDF_CODE && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
             selectedFileUri = data.getData();
-            String fileName = getFileNameFromUri(selectedFileUri);
-            textSelectedFile.setText("Selected: " + fileName);
+            selectedFileName = getFileNameFromUri(selectedFileUri);
+            textSelectedFile.setText("Selected: " + selectedFileName);
         }
     }
 
-    private void uploadAssignment() {
+    private void saveAssignmentToSQLite() {
         String studentId = editTextStudentId.getText().toString().trim();
         String studentClass = editTextClass.getText().toString().trim();
         String title = editTextAssignmentTitle.getText().toString().trim();
 
-        if (studentId.isEmpty() || studentClass.isEmpty() || title.isEmpty()) {
+        if (studentId.isEmpty() || studentClass.isEmpty() || title.isEmpty() || selectedFileName == null) {
             Toast.makeText(getContext(), "Please fill in all fields", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        String fileName = getFileNameFromUri(selectedFileUri);
-        StorageReference fileRef = storageRef.child(System.currentTimeMillis() + "_" + fileName);
+        // Save the assignment metadata (file name only)
+        long result = dbHelper.saveAssignment(studentId, studentClass, title, selectedFileName);
 
-        fileRef.putFile(selectedFileUri)
-                .addOnSuccessListener(taskSnapshot -> fileRef.getDownloadUrl().addOnSuccessListener(uri -> {
-                    Map<String, String> assignmentData = new HashMap<>();
-                    assignmentData.put("studentId", studentId);
-                    assignmentData.put("class", studentClass);
-                    assignmentData.put("title", title);
-                    assignmentData.put("fileUrl", uri.toString());
-
-                    dbRef.push().setValue(assignmentData)
-                            .addOnSuccessListener(aVoid -> Toast.makeText(getContext(), "Assignment uploaded", Toast.LENGTH_SHORT).show())
-                            .addOnFailureListener(e -> Toast.makeText(getContext(), "Failed to save to database", Toast.LENGTH_SHORT).show());
-                }))
-                .addOnFailureListener(e -> Toast.makeText(getContext(), "Upload failed", Toast.LENGTH_SHORT).show());
+        if (result != -1) {
+            Toast.makeText(getContext(), "Assignment saved locally", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getContext(), "Failed to save assignment", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private String getFileNameFromUri(Uri uri) {
         String result = null;
-        if (uri.getScheme().equals("content")) {
+        if ("content".equals(uri.getScheme())) {
             Cursor cursor = getContext().getContentResolver().query(uri, null, null, null, null);
             try {
                 if (cursor != null && cursor.moveToFirst()) {

@@ -28,11 +28,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <!-- Changed from Session to Course -->
         <EditText
-            android:id="@+id/editTextSession"
+            android:id="@+id/editTextCourse"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:hint="Session"
+            android:hint="Course"
             android:background="@drawable/rounded_edittext"
             android:padding="12dp"
             android:layout_marginBottom="12dp" />

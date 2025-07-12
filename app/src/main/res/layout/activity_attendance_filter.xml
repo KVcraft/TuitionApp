@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:background="@drawable/navbg"
-            android:title="Attendance"
+            android:title="Course Attendance"
             android:titleTextColor="@android:color/white"
             app:titleTextAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title" />
 
@@ -48,12 +48,14 @@
                         android:orientation="vertical"
                         android:padding="16dp">
 
+                        <!-- Course Selector -->
                         <Spinner
-                            android:id="@+id/sessionSpinner"
+                            android:id="@+id/courseSpinner"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:prompt="@string/select_session" />
+                            android:prompt="@string/select_course" />
 
+                        <!-- Class Date -->
                         <EditText
                             android:id="@+id/dateEditText"
                             android:layout_width="match_parent"
@@ -63,6 +65,7 @@
                             android:inputType="none"
                             android:layout_marginTop="8dp" />
 
+                        <!-- Class Time -->
                         <EditText
                             android:id="@+id/timeEditText"
                             android:layout_width="match_parent"
@@ -72,6 +75,7 @@
                             android:inputType="none"
                             android:layout_marginTop="8dp" />
 
+                        <!-- Submit Button -->
                         <Button
                             android:id="@+id/submitButton"
                             android:layout_width="wrap_content"
@@ -116,7 +120,7 @@
         </ScrollView>
     </LinearLayout>
 
-    <!-- Navigation Drawer (optional) -->
+    <!-- Navigation Drawer -->
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="280dp"
