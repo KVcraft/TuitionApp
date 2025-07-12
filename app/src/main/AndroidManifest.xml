@@ -18,13 +18,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TuitionApp"
         tools:targetApi="31">
+
         <activity
-
-            android:name=".TeacherScanQR"
-
+            android:name=".TeacherScanQR"/>
+        <activity
             android:name=".StudentGenerateQR"
-
             android:exported="true" />
+
         <activity
             android:name=".TeacherLogin"
             android:exported="true" />

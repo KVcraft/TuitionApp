@@ -1,6 +1,7 @@
 package com.example.tuitionapp;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -210,6 +211,9 @@ public class TeacherRegister extends AppCompatActivity {
         if (teacherId != -1) {
             Toast.makeText(this, "Teacher registered successfully", Toast.LENGTH_SHORT).show();
             clearForm();
+            // After successfully adding teacher to database
+            setResult(Activity.RESULT_OK);
+            finish();
         } else {
             Toast.makeText(this, "Registration failed. Email or NIC may already exist.",
                     Toast.LENGTH_SHORT).show();
