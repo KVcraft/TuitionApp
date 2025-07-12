@@ -12,25 +12,31 @@
         android:gravity="center_horizontal">
 
 
-        <!-- Top Gradient Header -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="160dp"
-            android:background="@drawable/top_bottom_gradient"
-            android:gravity="center">
+        <!-- Circular Insert Photo Button -->
+        <FrameLayout
+            android:id="@+id/studPhotoFrame"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@drawable/circle_gray"
+            android:clickable="true"
+            android:focusable="true">
 
-            <!-- Circular Insert Photo Button -->
+            <ImageView
+                android:id="@+id/studImageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
             <TextView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:background="@drawable/circle_gray"
+                android:id="@+id/photo_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="Insert\nphoto"
                 android:textColor="#FFFFFF"
                 android:textStyle="bold"
                 android:textAlignment="center"
                 android:lineSpacingExtra="4dp" />
-        </LinearLayout>
+        </FrameLayout>
 
         <!-- Input Fields -->
         <LinearLayout
@@ -47,6 +53,7 @@
                 android:layout_marginBottom="12dp"
                 android:background="@drawable/rounded_edittext"
                 android:hint="First Name"
+                android:id="@+id/etFirstName"
                 android:padding="12dp" />
 
             <EditText
@@ -55,6 +62,7 @@
                 android:layout_marginBottom="12dp"
                 android:background="@drawable/rounded_edittext"
                 android:hint="Last Name"
+                android:id="@+id/etLastName"
                 android:padding="12dp" />
 
             <EditText
@@ -63,6 +71,7 @@
                 android:layout_marginBottom="12dp"
                 android:background="@drawable/rounded_edittext"
                 android:hint="Email"
+                android:id="@+id/etEmail"
                 android:padding="12dp" />
 
             <EditText
@@ -72,6 +81,7 @@
                 android:background="@drawable/rounded_edittext"
                 android:hint="Password"
                 android:inputType="textPassword"
+                android:id="@+id/etPassword"
                 android:padding="12dp" />
 
             <EditText
@@ -81,6 +91,7 @@
                 android:background="@drawable/rounded_edittext"
                 android:hint="Confirm Password"
                 android:inputType="textPassword"
+                android:id="@+id/etConfirmPassword"
                 android:padding="12dp" />
 
             <EditText
@@ -90,6 +101,7 @@
                 android:background="@drawable/rounded_edittext"
                 android:hint="Contact No"
                 android:inputType="phone"
+                android:id="@+id/etContact"
                 android:padding="12dp" />
 
             <EditText
@@ -99,6 +111,7 @@
                 android:paddingBottom="20dp"
                 android:background="@drawable/rounded_edittext"
                 android:hint="Address"
+                android:id="@+id/etAddress"
                 android:padding="12dp" />
         </LinearLayout>
 
@@ -385,7 +398,8 @@
                 android:stateListAnimator="@null"
                 android:text="Register"
                 android:textColor="#FFFFFF"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:id="@+id/btnRegister"/>
         </LinearLayout>
     </LinearLayout>
 
