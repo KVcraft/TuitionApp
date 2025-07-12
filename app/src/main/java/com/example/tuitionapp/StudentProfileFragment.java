@@ -1,57 +1,73 @@
 package com.example.tuitionapp;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
+
+import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import androidx.fragment.app.Fragment;
+import android.util.Log;
+
+import java.util.List;
+
 public class StudentProfileFragment extends Fragment {
 
-    private TextView textFirstName, textLastName, textEmail, textContact, textAddress, textCourses;
-    private DatabaseHelper dbHelper;
-    private String loggedInEmail = "student@example.com"; // Replace this with real login data
+    TextView tvFirstName, tvLastName, tvEmail, tvContactNo, tvAddress, tvCourse;
+    DatabaseHelper dbHelper;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_student_profile, container, false);
+        View view = inflater.inflate(R.layout.fragment_teacher_profile, container, false);
 
-        // Initialize database helper
-        dbHelper = new DatabaseHelper(getContext());
+        // Bind Views
+        tvFirstName = view.findViewById(R.id.tvFirstName);
+        tvLastName = view.findViewById(R.id.tvLastName);
+        tvEmail = view.findViewById(R.id.tvEmail);
+        tvContactNo = view.findViewById(R.id.tvContactNo);
+        tvAddress = view.findViewById(R.id.tvAddress);
+        tvCourse = view.findViewById(R.id.tvCourse);
 
-        // Bind views
-        textFirstName = view.findViewById(R.id.textFirstName);
-        textLastName = view.findViewById(R.id.textLastName);
-        textEmail = view.findViewById(R.id.textEmail);
-        textContact = view.findViewById(R.id.textContact);
-        textAddress = view.findViewById(R.id.textAddress);
-        textCourses = view.findViewById(R.id.textCourses);
+        // Get stored email from SharedPreferences
+        SharedPreferences prefs = requireContext().getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE);
+        String studentEmail = prefs.getString("student_email", null);
 
-        // Load profile
-        loadStudentProfile();
+        if (studentEmail != null) {
+            dbHelper = new DatabaseHelper(requireContext());
+            Cursor cursor = (Cursor) dbHelper.getStudentByEmail(studentEmail);
+
+            if (cursor != null && cursor.moveToFirst()) {
+                int studentId = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_ID));
+                String firstName = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_FIRSTNAME));
+                String lastName = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_LASTNAME));
+                String contact = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_CONTACT_NUMBER));
+                String address = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_ADDRESS));
+
+                List<String> courseList = dbHelper.getCoursesForStudent(studentId);
+                String courseString = String.join(", ", courseList);
+
+                tvFirstName.setText(firstName);
+                tvLastName.setText(lastName);
+                tvEmail.setText(studentEmail);
+                tvContactNo.setText(contact);
+                tvAddress.setText(address);
+                tvCourse.setText(courseString);
+
+                Log.d("StudentProfile", "Loaded: " + studentEmail);
+            } else {
+                Log.e("StudentProfile", "Student not found");
+            }
+
+            if (cursor != null) cursor.close();
+        } else {
+            Log.e("StudentProfile", "No student email in session");
+        }
 
         return view;
-    }
-
-    private void loadStudentProfile() {
-        Cursor cursor = dbHelper.getStudentByEmail(loggedInEmail);
-        if (cursor != null && cursor.moveToFirst()) {
-            try {
-                textFirstName.setText(cursor.getString(cursor.getColumnIndexOrThrow("first_name")));
-                textLastName.setText(cursor.getString(cursor.getColumnIndexOrThrow("last_name")));
-                textEmail.setText(cursor.getString(cursor.getColumnIndexOrThrow("email")));
-                textContact.setText(cursor.getString(cursor.getColumnIndexOrThrow("contact")));
-                textAddress.setText(cursor.getString(cursor.getColumnIndexOrThrow("address")));
-                textCourses.setText(cursor.getString(cursor.getColumnIndexOrThrow("courses")));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            cursor.close();
-        } else {
-            Log.e("StudentProfile", "No data found for email: " + loggedInEmail);
-        }
     }
 }

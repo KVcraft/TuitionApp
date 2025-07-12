@@ -1,6 +1,8 @@
 package com.example.tuitionapp;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,15 +19,13 @@ public class TeacherLogin extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_teacher_login); // Make sure this matches your layout file name
+        setContentView(R.layout.activity_teacher_login);
 
         // Initialize views
         editTextEmail = findViewById(R.id.editTextTeacherEmail);
         editTextPassword = findViewById(R.id.editTextTeacherPassword);
         buttonLogin = findViewById(R.id.buttonTeacherLogin);
         dbHelper = new DatabaseHelper(this);
-
-
 
         // Handle login button click
         buttonLogin.setOnClickListener(view -> {
@@ -41,15 +41,20 @@ public class TeacherLogin extends AppCompatActivity {
             if (isValid) {
                 Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show();
 
-                // You can pass teacher info if needed (e.g., email or ID)
+                // ✅ Save teacher email in SharedPreferences
+                SharedPreferences prefs = getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("teacher_email", email); // Save email for profile loading
+                editor.apply();
+
+                // Navigate to dashboard
                 Intent intent = new Intent(TeacherLogin.this, TeacherDashboard.class);
-                intent.putExtra("teacher_email", email);
+                intent.putExtra("teacher_email", email); // optional
                 startActivity(intent);
                 finish();
             } else {
                 Toast.makeText(this, "Invalid credentials", Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 }

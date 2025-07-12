@@ -61,4 +61,25 @@
         <item>French</item>
         <item>English Literature</item>
     </string-array>
+
+        <string name="profile">Profile</string>
+        <string name="first_name">First Name</string>
+        <string name="last_name">Last Name</string>
+        <string name="nic">NIC</string>
+        <string name="email">Email</string>
+        <string name="contact_no">Contact Number</string>
+        <string name="address">Address</string>
+        <string name="course">Course</string>
+        <string name="profile_photo_desc">Teacher profile photo</string>
+
+    <string name="label_first_name">First Name</string>
+    <string name="label_last_name">Last Name</string>
+    <string name="label_email">Email</string>
+    <string name="label_contact">Contact No</string>
+    <string name="label_address">Address</string>
+    <string name="label_courses">Enrolled Courses</string>
+    <string name="default_na">N/A</string>
+    <string name="label_photo">Photo</string>
+
+
 </resources>

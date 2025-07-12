@@ -143,6 +143,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + COLUMN_RESULT_TIME + " TEXT, "
             + COLUMN_RESULT_SCORE + " TEXT)";
 
+    private static final String TABLE_STUDENT_ASSIGNMENTS = "student_assignments";
+
+    private static final String COLUMN_ASSIGNMENT_ID = "id";
+    private static final String COLUMN_ASSIGNMENT_STUDENT_ID = "student_id";
+    private static final String COLUMN_ASSIGNMENT_CLASS = "student_class";
+    private static final String COLUMN_ASSIGNMENT_TITLE = "assignment_title";
+    private static final String COLUMN_ASSIGNMENT_FILE_NAME = "file_name";
+
+    private static final String CREATE_TABLE_STUDENT_ASSIGNMENTS = "CREATE TABLE " + TABLE_STUDENT_ASSIGNMENTS + " (" +
+            COLUMN_ASSIGNMENT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            COLUMN_ASSIGNMENT_STUDENT_ID + " INTEGER NOT NULL, " +
+            COLUMN_ASSIGNMENT_CLASS + " TEXT, " +
+            COLUMN_ASSIGNMENT_TITLE + " TEXT NOT NULL, " +
+            COLUMN_ASSIGNMENT_FILE_NAME + " TEXT, " +
+            "FOREIGN KEY (" + COLUMN_ASSIGNMENT_STUDENT_ID + ") REFERENCES " + TABLE_STUDENTS + "(" + COLUMN_ID + ")" +
+            ")";
+
+
+
+
+
 
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -155,6 +176,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         insertDefaultCourses(db);
         insertDefaultAdmin(db);
         db.execSQL(CREATE_TABLE_RESULTS);
+        db.execSQL(CREATE_TABLE_STUDENT_ASSIGNMENTS);
 
     }
 
@@ -166,6 +188,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_ADMINS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_TEACHERS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_COURSES);
+        db.execSQL("DROP TABLE IF EXISTS student_assignments");
         onCreate(db);
     }
 
@@ -486,30 +509,93 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return studentId;
     }
 
-    public Cursor getStudentByEmail(String email) {
+    public StudentModel getStudentByEmail(String email) {
         SQLiteDatabase db = this.getReadableDatabase();
-        return db.rawQuery("SELECT * FROM students WHERE email = ?", new String[]{email});
+
+        Cursor cursor = db.query(TABLE_STUDENTS,
+                null,
+                COLUMN_EMAIL + " = ?",
+                new String[]{email},
+                null, null, null);
+
+        if (cursor.moveToFirst()) {
+            int studentId = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID));
+            String firstName = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_FIRSTNAME));
+            String lastName = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LASTNAME));
+            String contact = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_CONTACT_NUMBER));
+            String address = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ADDRESS));
+
+            // Fetch enrolled courses
+            List<String> courseList = getCoursesForStudent(studentId);
+            String courses = String.join(", ", courseList);
+
+            cursor.close();
+            db.close();
+
+            return new StudentModel(firstName, lastName, email, contact, address, courses);
+        }
+
+        cursor.close();
+        db.close();
+        return null;
     }
+
+
+
+    public List<String> getCoursesForStudent(int studentId) {
+        List<String> courses = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT course_name FROM student_courses WHERE student_id = ?", new String[]{String.valueOf(studentId)});
+        while (cursor.moveToNext()) {
+            courses.add(cursor.getString(0));
+        }
+        cursor.close();
+        return courses;
+    }
+
+
 
     public Teacher getTeacherByEmail(String email) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM teachers WHERE email = ?", new String[]{email});
 
-        if (cursor != null && cursor.moveToFirst()) {
-            Teacher teacher = new Teacher(
-                    cursor.getString(cursor.getColumnIndexOrThrow("first_name")),
-                    cursor.getString(cursor.getColumnIndexOrThrow("last_name")),
-                    cursor.getString(cursor.getColumnIndexOrThrow("nic")),
-                    cursor.getString(cursor.getColumnIndexOrThrow("email")),
-                    cursor.getString(cursor.getColumnIndexOrThrow("contact")),
-                    cursor.getString(cursor.getColumnIndexOrThrow("address")),
-                    cursor.getString(cursor.getColumnIndexOrThrow("course"))
-            );
+        Cursor cursor = db.query(TABLE_TEACHERS,
+                null,
+                COLUMN_TEACHER_EMAIL + " = ?",
+                new String[]{email},
+                null, null, null);
+
+        if (cursor.moveToFirst()) {
+            int teacherId = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_TEACHER_ID));
+            String firstName = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TEACHER_FIRSTNAME));
+            String lastName = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TEACHER_LASTNAME));
+            String nic = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TEACHER_NIC));
+            String contact = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TEACHER_CONTACT));
+            String address = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TEACHER_ADDRESS));
+
+            // Get teacher's courses
+            List<String> coursesList = getCoursesForTeacher(teacherId);
+            String courseString = String.join(", ", coursesList);
+
+            Teacher teacher = new Teacher(firstName, lastName, nic, email, contact, address, courseString);
             cursor.close();
+            db.close();
             return teacher;
         }
 
+        cursor.close();
+        db.close();
         return null;
+    }
+
+    public void insertStudentAssignment(String studentId, String studentClass, String title, String fileName) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("student_id", studentId);
+        values.put("student_class", studentClass);
+        values.put("title", title);
+        values.put("file_name", fileName);
+        db.insert("student_assignments", null, values);
+        db.close();
     }
 
 

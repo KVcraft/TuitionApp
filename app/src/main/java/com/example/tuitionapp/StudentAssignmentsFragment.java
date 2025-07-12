@@ -5,12 +5,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.provider.OpenableColumns;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,106 +15,113 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 public class StudentAssignmentsFragment extends Fragment {
 
-    private static final int PICK_PDF_CODE = 100;
+    private static final int PICK_FILE_REQUEST = 1;
 
     private EditText editTextStudentId, editTextClass, editTextAssignmentTitle;
+    private Button buttonAttachAssignment, buttonUploadAssignment;
     private TextView textSelectedFile;
-    private Button buttonAttach, buttonUpload;
 
     private Uri selectedFileUri;
-    private String selectedFileName;
+    private String selectedFileName = "";
 
     private DatabaseHelper dbHelper;
 
-    public StudentAssignmentsFragment() {}
+    public StudentAssignmentsFragment() {
+        // Required empty public constructor
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_student_assignments, container, false);
-    }
+        View view = inflater.inflate(R.layout.fragment_student_assignments, container, false);
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
+        // Initialize Views
         editTextStudentId = view.findViewById(R.id.editTextStudentId);
         editTextClass = view.findViewById(R.id.editTextClass);
         editTextAssignmentTitle = view.findViewById(R.id.editTextAssignmentTitle);
+        buttonAttachAssignment = view.findViewById(R.id.buttonAttachAssignment);
+        buttonUploadAssignment = view.findViewById(R.id.buttonUploadAssignment);
         textSelectedFile = view.findViewById(R.id.textSelectedFile);
-        buttonAttach = view.findViewById(R.id.buttonAttachAssignment);
-        buttonUpload = view.findViewById(R.id.buttonUploadAssignment);
 
         dbHelper = new DatabaseHelper(requireContext());
 
-        buttonAttach.setOnClickListener(v -> openFileChooser());
+        // Attach button
+        buttonAttachAssignment.setOnClickListener(v -> openFileChooser());
 
-        buttonUpload.setOnClickListener(v -> {
-            if (selectedFileUri == null) {
-                Toast.makeText(getContext(), "Please select a file first", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            saveAssignmentToSQLite();
-        });
+        // Upload button
+        buttonUploadAssignment.setOnClickListener(v -> uploadAssignment());
+
+        return view;
     }
 
     private void openFileChooser() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("application/pdf");
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-        startActivityForResult(Intent.createChooser(intent, "Select PDF"), PICK_PDF_CODE);
+        intent.setType("*/*");  // You can restrict to "application/pdf" if needed
+        startActivityForResult(Intent.createChooser(intent, "Select Assignment File"), PICK_FILE_REQUEST);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == PICK_PDF_CODE && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
+        if (requestCode == PICK_FILE_REQUEST && resultCode == Activity.RESULT_OK && data != null) {
             selectedFileUri = data.getData();
-            selectedFileName = getFileNameFromUri(selectedFileUri);
-            textSelectedFile.setText("Selected: " + selectedFileName);
+            selectedFileName = getFileName(selectedFileUri);
+            textSelectedFile.setText(selectedFileName);
         }
     }
 
-    private void saveAssignmentToSQLite() {
-        String studentId = editTextStudentId.getText().toString().trim();
-        String studentClass = editTextClass.getText().toString().trim();
-        String title = editTextAssignmentTitle.getText().toString().trim();
-
-        if (studentId.isEmpty() || studentClass.isEmpty() || title.isEmpty() || selectedFileName == null) {
-            Toast.makeText(getContext(), "Please fill in all fields", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        // Save the assignment metadata (file name only)
-        long result = dbHelper.saveAssignment(studentId, studentClass, title, selectedFileName);
-
-        if (result != -1) {
-            Toast.makeText(getContext(), "Assignment saved locally", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(getContext(), "Failed to save assignment", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private String getFileNameFromUri(Uri uri) {
+    private String getFileName(Uri uri) {
         String result = null;
-        if ("content".equals(uri.getScheme())) {
-            Cursor cursor = getContext().getContentResolver().query(uri, null, null, null, null);
+        if (uri.getScheme().equals("content")) {
+            Cursor cursor = requireContext().getContentResolver().query(uri, null, null, null, null);
             try {
                 if (cursor != null && cursor.moveToFirst()) {
-                    result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                    result = cursor.getString(cursor.getColumnIndexOrThrow(OpenableColumns.DISPLAY_NAME));
                 }
             } finally {
                 if (cursor != null) cursor.close();
             }
         }
+
         if (result == null) {
             result = uri.getPath();
-            int cut = result.lastIndexOf('/');
-            if (cut != -1) result = result.substring(cut + 1);
+            int cut = result != null ? result.lastIndexOf('/') : -1;
+            if (cut != -1 && result != null) {
+                result = result.substring(cut + 1);
+            }
         }
+
         return result;
+    }
+
+    private void uploadAssignment() {
+        String studentId = editTextStudentId.getText().toString().trim();
+        String studentClass = editTextClass.getText().toString().trim();
+        String title = editTextAssignmentTitle.getText().toString().trim();
+
+        if (TextUtils.isEmpty(studentId) || TextUtils.isEmpty(studentClass) || TextUtils.isEmpty(title) || TextUtils.isEmpty(selectedFileName)) {
+            Toast.makeText(getContext(), "Please fill all fields and attach a file", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        dbHelper.insertStudentAssignment(studentId, studentClass, title, selectedFileName);
+        Toast.makeText(getContext(), "Assignment submitted successfully", Toast.LENGTH_SHORT).show();
+
+        clearFields();
+    }
+
+    private void clearFields() {
+        editTextStudentId.setText("");
+        editTextClass.setText("");
+        editTextAssignmentTitle.setText("");
+        textSelectedFile.setText("No file selected");
+        selectedFileUri = null;
+        selectedFileName = "";
     }
 }
