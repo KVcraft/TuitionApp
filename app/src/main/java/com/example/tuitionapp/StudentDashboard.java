@@ -67,7 +67,8 @@ implements NavigationView.OnNavigationItemSelectedListener {
         } else if (id == R.id.stud_nav_assignments) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new StudentAssignmentsFragment()).commit();
         } else if (id == R.id.stud_nav_qr) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new StudentQRFragment()).commit();
+            Intent intent = new Intent(this, StudentGenerateQR.class);
+            startActivity(intent);
         } else if (id == R.id.stud_nav_profile) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new StudentProfileFragment()).commit();
         } else if (id == R.id.stud_nav_notifications) {
