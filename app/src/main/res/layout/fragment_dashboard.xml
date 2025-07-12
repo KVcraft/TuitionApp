@@ -31,9 +31,10 @@
                 app:tint="#FFFFFF" />
 
             <TextView
+                android:id="@+id/tvStudentCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="300"
+                android:text="0"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp"
                 android:layout_marginTop="8dp" />
@@ -54,9 +55,10 @@
                 app:tint="#FFFFFF" />
 
             <TextView
+                android:id="@+id/tvTeacherCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="15"
+                android:text="0"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp"
                 android:layout_marginTop="8dp" />
@@ -77,9 +79,10 @@
                 app:tint="#FFFFFF" />
 
             <TextView
+                android:id="@+id/tvAdminCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="4"
+                android:text="0"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp"
                 android:layout_marginTop="8dp" />
