@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+
+
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -123,6 +125,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         super(context, DB_NAME, null, DB_VERSION);
     }
 
+    // Results Table
+    public static final String TABLE_RESULTS = "Student_Results";
+    public static final String COLUMN_RESULT_ID = "id";
+    public static final String COLUMN_RESULT_STUDENT_ID = "student_id";
+    public static final String COLUMN_RESULT_COURSE = "course";
+    public static final String COLUMN_RESULT_DATE = "date";
+    public static final String COLUMN_RESULT_TIME = "time";
+    public static final String COLUMN_RESULT_SCORE = "result";  // could be marks, grade, etc.
+
+    // SQL to create table
+    private static final String CREATE_TABLE_RESULTS = "CREATE TABLE " + TABLE_RESULTS + " ("
+            + COLUMN_RESULT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + COLUMN_RESULT_STUDENT_ID + " INTEGER, "
+            + COLUMN_RESULT_COURSE + " TEXT, "
+            + COLUMN_RESULT_DATE + " TEXT, "
+            + COLUMN_RESULT_TIME + " TEXT, "
+            + COLUMN_RESULT_SCORE + " TEXT)";
+
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TABLE_STUDENTS);
@@ -133,6 +154,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_TEACHER_COURSES);
         insertDefaultCourses(db);
         insertDefaultAdmin(db);
+        db.execSQL(CREATE_TABLE_RESULTS);
+
     }
 
     @Override
@@ -415,6 +438,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return id;
     }
+
+    public void addStudentResult(String studentId, String course, String date, String time, String result) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_RESULT_STUDENT_ID, studentId);
+        values.put(COLUMN_RESULT_COURSE, course);
+        values.put(COLUMN_RESULT_DATE, date);
+        values.put(COLUMN_RESULT_TIME, time);
+        values.put(COLUMN_RESULT_SCORE, result);
+
+        long id = db.insert(TABLE_RESULTS, null, values);
+        db.close();
+    }
+
+
 
 
 }
