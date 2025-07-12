@@ -32,14 +32,14 @@ public class MainActivity extends AppCompatActivity {
 
     //OnClick method to open student login
     public void loginStudent (View view){
-        //Intent intent = new Intent(this, StudentLogin.class);
-        //startActivity(intent);
+        Intent intent = new Intent(this, StudentLogin.class);
+        startActivity(intent);
     }
 
     //OnClick method to open teacher login
     public void loginTeacher (View view){
-        //Intent intent = new Intent(this, TeacherLogin.class);
-        //startActivity(intent);
+        Intent intent = new Intent(this, TeacherLogin.class);
+        startActivity(intent);
     }
 
 
