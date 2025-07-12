@@ -59,6 +59,7 @@ public class AdminLogin extends AppCompatActivity {
         }
     }
 
+
     // Go to Welcome screen
     public void Welcome(View view) {
         startActivity(new Intent(this, MainActivity.class));

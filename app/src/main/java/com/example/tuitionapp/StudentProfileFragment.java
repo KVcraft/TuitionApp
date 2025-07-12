@@ -1,64 +1,57 @@
 package com.example.tuitionapp;
 
+import android.database.Cursor;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link StudentProfileFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import android.widget.TextView;
+import androidx.fragment.app.Fragment;
 public class StudentProfileFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public StudentProfileFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment StudentProfileFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static StudentProfileFragment newInstance(String param1, String param2) {
-        StudentProfileFragment fragment = new StudentProfileFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+    private TextView textFirstName, textLastName, textEmail, textContact, textAddress, textCourses;
+    private DatabaseHelper dbHelper;
+    private String loggedInEmail = "student@example.com"; // Replace this with real login data
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_student_profile, container, false);
+        View view = inflater.inflate(R.layout.fragment_student_profile, container, false);
+
+        // Initialize database helper
+        dbHelper = new DatabaseHelper(getContext());
+
+        // Bind views
+        textFirstName = view.findViewById(R.id.textFirstName);
+        textLastName = view.findViewById(R.id.textLastName);
+        textEmail = view.findViewById(R.id.textEmail);
+        textContact = view.findViewById(R.id.textContact);
+        textAddress = view.findViewById(R.id.textAddress);
+        textCourses = view.findViewById(R.id.textCourses);
+
+        // Load profile
+        loadStudentProfile();
+
+        return view;
+    }
+
+    private void loadStudentProfile() {
+        Cursor cursor = dbHelper.getStudentByEmail(loggedInEmail);
+        if (cursor != null && cursor.moveToFirst()) {
+            try {
+                textFirstName.setText(cursor.getString(cursor.getColumnIndexOrThrow("first_name")));
+                textLastName.setText(cursor.getString(cursor.getColumnIndexOrThrow("last_name")));
+                textEmail.setText(cursor.getString(cursor.getColumnIndexOrThrow("email")));
+                textContact.setText(cursor.getString(cursor.getColumnIndexOrThrow("contact")));
+                textAddress.setText(cursor.getString(cursor.getColumnIndexOrThrow("address")));
+                textCourses.setText(cursor.getString(cursor.getColumnIndexOrThrow("courses")));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            cursor.close();
+        } else {
+            Log.e("StudentProfile", "No data found for email: " + loggedInEmail);
+        }
     }
 }
