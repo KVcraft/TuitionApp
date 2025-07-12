@@ -27,6 +27,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_PHOTO = "photo";
     public static final String COLUMN_QR_CODE = "qr_code";
 
+    // Admin table with unique column names
+    public static final String TABLE_ADMINS = "Admins";
+    public static final String COLUMN_ADMIN_ID = "admin_id";
+    public static final String COLUMN_ADMIN_FIRSTNAME = "admin_firstname";
+    public static final String COLUMN_ADMIN_LASTNAME = "admin_lastname";
+    public static final String COLUMN_ADMIN_EMAIL = "admin_email";
+    public static final String COLUMN_ADMIN_PASSWORD = "admin_password";
+    public static final String COLUMN_ADMIN_CONTACT = "admin_contact";
+    public static final String COLUMN_ADMIN_ADDRESS = "admin_address";
+
     // Courses table
     public static final String TABLE_COURSES = "Courses";
     public static final String COLUMN_COURSE_ID = "course_id";
@@ -50,6 +60,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + COLUMN_QR_CODE + " TEXT"
             + ")";
 
+    private static final String CREATE_TABLE_ADMINS = "CREATE TABLE " + TABLE_ADMINS + "("
+            + COLUMN_ADMIN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + COLUMN_ADMIN_FIRSTNAME + " TEXT NOT NULL,"
+            + COLUMN_ADMIN_LASTNAME + " TEXT NOT NULL,"
+            + COLUMN_ADMIN_EMAIL + " TEXT UNIQUE NOT NULL,"
+            + COLUMN_ADMIN_PASSWORD + " TEXT NOT NULL,"
+            + COLUMN_ADMIN_CONTACT + " TEXT,"
+            + COLUMN_ADMIN_ADDRESS + " TEXT"
+            + ")";
+
     private static final String CREATE_TABLE_COURSES = "CREATE TABLE " + TABLE_COURSES + "("
             + COLUMN_COURSE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + COLUMN_COURSE_NAME + " TEXT UNIQUE NOT NULL"
@@ -70,15 +90,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TABLE_STUDENTS);
+        db.execSQL(CREATE_TABLE_ADMINS);
         db.execSQL(CREATE_TABLE_COURSES);
         db.execSQL(CREATE_TABLE_STUDENT_COURSES);
         insertDefaultCourses(db);
+        insertDefaultAdmin(db);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_STUDENT_COURSES);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_STUDENTS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_ADMINS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_COURSES);
         onCreate(db);
     }
@@ -95,6 +118,54 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             values.put(COLUMN_COURSE_NAME, course);
             db.insert(TABLE_COURSES, null, values);
         }
+    }
+
+    private void insertDefaultAdmin(SQLiteDatabase db) {
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_ADMIN_FIRSTNAME, "Admin");
+        values.put(COLUMN_ADMIN_LASTNAME, "User");
+        values.put(COLUMN_ADMIN_EMAIL, "admin@tuitionapp.com");
+        values.put(COLUMN_ADMIN_PASSWORD, "admin123");
+        values.put(COLUMN_ADMIN_CONTACT, "1234567890");
+        values.put(COLUMN_ADMIN_ADDRESS, "123 Admin Street");
+
+        db.insert(TABLE_ADMINS, null, values);
+    }
+
+    // Add methods for admin operations
+    public long addAdmin(String firstName, String lastName, String email, String password,
+                         String contact, String address) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_ADMIN_FIRSTNAME, firstName);
+        values.put(COLUMN_ADMIN_LASTNAME, lastName);
+        values.put(COLUMN_ADMIN_EMAIL, email);
+        values.put(COLUMN_ADMIN_PASSWORD, password);
+        values.put(COLUMN_ADMIN_CONTACT, contact);
+        values.put(COLUMN_ADMIN_ADDRESS, address);
+
+        long adminId = db.insert(TABLE_ADMINS, null, values);
+        db.close();
+        return adminId;
+    }
+
+    public boolean checkAdmin(String email, String password) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] columns = {COLUMN_ADMIN_ID};
+        String selection = COLUMN_ADMIN_EMAIL + " = ?" + " AND " + COLUMN_ADMIN_PASSWORD + " = ?";
+        String[] selectionArgs = {email, password};
+
+        Cursor cursor = db.query(TABLE_ADMINS,
+                columns,
+                selection,
+                selectionArgs,
+                null, null, null);
+
+        int count = cursor.getCount();
+        cursor.close();
+        db.close();
+
+        return count > 0;
     }
 
     public long addStudent(String firstName, String lastName, String email, String password,
