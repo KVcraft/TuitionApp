@@ -1,18 +1,20 @@
 package com.example.tuitionapp;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
-import android.app.ComponentCaller;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.View;
-import android.widget.Button;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,23 +24,30 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-public class TeacherRegister extends AppCompatActivity {
-    EditText firstName, lastName, nic, email, password, confirmPassword, contact, address, course;
-    Button registerBtn;
+import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
-    // Photo UI references
-    ImageView imageView;
-    TextView photoText;
-    FrameLayout photoFrame;
+public class TeacherRegister extends AppCompatActivity {
+    private EditText firstName, lastName, nic, email, password, confirmPassword, contact, address;
+    private Spinner courseSpinner;
+    private ImageView imageView;
+    private TextView photoText;
+    private FrameLayout photoFrame;
+    private DatabaseHelper databaseHelper;
+    private Bitmap teacherPhoto;
+    private String selectedCourse;
 
     private static final int REQUEST_CAMERA = 100;
     private static final int PERMISSION_REQUEST_CODE = 2000;
 
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teacher_register);
+
+        // Initialize database helper
+        databaseHelper = new DatabaseHelper(this);
 
         // Bind views
         firstName = findViewById(R.id.first_name);
@@ -49,66 +58,79 @@ public class TeacherRegister extends AppCompatActivity {
         confirmPassword = findViewById(R.id.confirm_password);
         contact = findViewById(R.id.contact);
         address = findViewById(R.id.address);
-        course = findViewById(R.id.course);
+        courseSpinner = findViewById(R.id.course);
         imageView = findViewById(R.id.imageView);
         photoText = findViewById(R.id.photo_text);
         photoFrame = findViewById(R.id.photoFrame);
 
-        photoFrame.setOnClickListener(new View.OnClickListener() {
-                                          @Override
-                                          public void onClick(View view) {
-                                              checkPermisionAndOpenCamera();
-                                          }
-                                      }
+        // Set up course spinner
+        setupCourseSpinner();
+
+        photoFrame.setOnClickListener(view -> checkPermissionAndOpenCamera());
+    }
+
+    private void setupCourseSpinner() {
+        // Get courses from database
+        List<String> courses = databaseHelper.getAllCourseNames();
+
+        // Create adapter for spinner
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                this,
+                android.R.layout.simple_spinner_item,
+                courses
         );
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        courseSpinner.setAdapter(adapter);
 
+        // Set spinner item selection listener
+        courseSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectedCourse = parent.getItemAtPosition(position).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                selectedCourse = null;
+            }
+        });
     }
 
-    private void checkPermisionAndOpenCamera() {
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, PERMISSION_REQUEST_CODE);
-            return;
-        }
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(intent, REQUEST_CAMERA);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data, @NonNull ComponentCaller caller) {
-        super.onActivityResult(requestCode, resultCode, data, caller);
-        switch (requestCode){
-            case REQUEST_CAMERA:
-                Bitmap capturedImage = (Bitmap) data.getExtras().get("data");
-                imageView.setImageBitmap(capturedImage);
-                break;
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults, int deviceId) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults, deviceId);
-        switch (requestCode){
-            case PERMISSION_REQUEST_CODE:
-                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    checkPermisionAndOpenCamera();
-                }
-                break;
+    private void checkPermissionAndOpenCamera() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.CAMERA},
+                    PERMISSION_REQUEST_CODE);
+        } else {
+            openCamera();
         }
     }
 
     private void openCamera() {
-        Intent openCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (openCamera.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(openCamera, REQUEST_CAMERA);
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(intent, REQUEST_CAMERA);
         } else {
             Toast.makeText(this, "No camera app found", Toast.LENGTH_SHORT).show();
         }
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CAMERA && resultCode == RESULT_OK && data != null) {
+            teacherPhoto = (Bitmap) data.getExtras().get("data");
+            imageView.setImageBitmap(teacherPhoto);
+            photoText.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == REQUEST_CAMERA) {
+        if (requestCode == PERMISSION_REQUEST_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 openCamera();
             } else {
@@ -117,7 +139,6 @@ public class TeacherRegister extends AppCompatActivity {
         }
     }
 
-    // Called when register button is clicked
     public void onRegisterClick(View view) {
         String fname = firstName.getText().toString().trim();
         String lname = lastName.getText().toString().trim();
@@ -127,27 +148,93 @@ public class TeacherRegister extends AppCompatActivity {
         String confirmPass = confirmPassword.getText().toString().trim();
         String phone = contact.getText().toString().trim();
         String addr = address.getText().toString().trim();
-        String courseName = course.getText().toString().trim();
 
-        if (fname.isEmpty() || lname.isEmpty() || nicNo.isEmpty() || emailAddr.isEmpty() ||
-                pass.isEmpty() || confirmPass.isEmpty() || phone.isEmpty() || addr.isEmpty() || courseName.isEmpty()) {
-            Toast.makeText(this, "Please fill all required fields", Toast.LENGTH_SHORT).show();
-        } else if (nicNo.length() != 12) {
-            Toast.makeText(this, "NIC should be 12 characters", Toast.LENGTH_SHORT).show();
-        } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(emailAddr).matches()) {
-            Toast.makeText(this, "Invalid email", Toast.LENGTH_SHORT).show();
-        } else if (!pass.equals(confirmPass)) {
-            Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show();
+        // Validate inputs
+        if (TextUtils.isEmpty(fname)) {
+            firstName.setError("First name is required");
+            return;
+        }
+
+        if (TextUtils.isEmpty(lname)) {
+            lastName.setError("Last name is required");
+            return;
+        }
+
+        if (TextUtils.isEmpty(nicNo) || nicNo.length() != 12) {
+            nic.setError("Valid NIC (12 characters) is required");
+            return;
+        }
+
+        if (TextUtils.isEmpty(emailAddr) || !Patterns.EMAIL_ADDRESS.matcher(emailAddr).matches()) {
+            email.setError("Valid email is required");
+            return;
+        }
+
+        if (TextUtils.isEmpty(pass) || pass.length() < 6) {
+            password.setError("Password must be at least 6 characters");
+            return;
+        }
+
+        if (!pass.equals(confirmPass)) {
+            confirmPassword.setError("Passwords don't match");
+            return;
+        }
+
+        if (TextUtils.isEmpty(phone)) {
+            contact.setError("Contact number is required");
+            return;
+        }
+
+        if (TextUtils.isEmpty(addr)) {
+            address.setError("Address is required");
+            return;
+        }
+
+        if (selectedCourse == null || selectedCourse.isEmpty()) {
+            Toast.makeText(this, "Please select a course", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Convert photo to byte array
+        byte[] photoBytes = teacherPhoto != null ?
+                DatabaseHelper.getBytesFromBitmap(teacherPhoto) : null;
+
+        // Create list of selected courses (can be expanded for multiple selections)
+        List<String> courseNames = new ArrayList<>();
+        courseNames.add(selectedCourse);
+
+        // Register teacher
+        long teacherId = databaseHelper.addTeacher(fname, lname, nicNo, emailAddr, pass,
+                phone, addr, photoBytes, courseNames);
+
+        if (teacherId != -1) {
+            Toast.makeText(this, "Teacher registered successfully", Toast.LENGTH_SHORT).show();
+            clearForm();
         } else {
-            Toast.makeText(this, "Registration successful", Toast.LENGTH_SHORT).show();
-            firstName.setText(""); lastName.setText(""); nic.setText("");
-            email.setText(""); password.setText(""); confirmPassword.setText("");
-            contact.setText(""); address.setText(""); course.setText("");
-
-            imageView.setImageBitmap(null);
-            imageView.setVisibility(View.GONE);
-            photoText.setVisibility(View.VISIBLE);
+            Toast.makeText(this, "Registration failed. Email or NIC may already exist.",
+                    Toast.LENGTH_SHORT).show();
         }
     }
 
+    private void clearForm() {
+        firstName.setText("");
+        lastName.setText("");
+        nic.setText("");
+        email.setText("");
+        password.setText("");
+        confirmPassword.setText("");
+        contact.setText("");
+        address.setText("");
+        courseSpinner.setSelection(0);
+
+        teacherPhoto = null;
+        imageView.setImageBitmap(null);
+        photoText.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    protected void onDestroy() {
+        databaseHelper.close();
+        super.onDestroy();
+    }
 }

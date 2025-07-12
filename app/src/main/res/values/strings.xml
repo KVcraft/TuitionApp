@@ -47,4 +47,16 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
+    <string-array name="Courses">
+        <item>Biology</item>
+        <item>Combined Maths</item>
+        <item>Chemistry</item>
+        <item>ICT</item>
+        <item>Business Studies</item>
+        <item>Economics</item>
+        <item>Accounting</item>
+        <item>English</item>
+        <item>French</item>
+        <item>English Literature</item>
+    </string-array>
 </resources>

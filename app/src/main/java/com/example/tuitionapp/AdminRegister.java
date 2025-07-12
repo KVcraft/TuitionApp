@@ -2,6 +2,7 @@ package com.example.tuitionapp;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,7 +18,7 @@ public class AdminRegister extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_register); // Make sure your XML is named admin_registration.xml
+        setContentView(R.layout.activity_admin_register);
 
         // Initialize database helper
         databaseHelper = new DatabaseHelper(this);
@@ -33,12 +34,7 @@ public class AdminRegister extends AppCompatActivity {
         btnRegister = findViewById(R.id.btnRegister);
 
         // Set click listener for register button
-        btnRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                registerAdmin();
-            }
-        });
+        btnRegister.setOnClickListener(v -> registerAdmin());
     }
 
     private void registerAdmin() {
@@ -52,62 +48,12 @@ public class AdminRegister extends AppCompatActivity {
         String address = etAddress.getText().toString().trim();
 
         // Validate inputs
-        if (TextUtils.isEmpty(firstName)) {
-            etFirstName.setError("First name is required");
-            etFirstName.requestFocus();
-            return;
-        }
-
-        if (TextUtils.isEmpty(lastName)) {
-            etLastName.setError("Last name is required");
-            etLastName.requestFocus();
-            return;
-        }
-
-        if (TextUtils.isEmpty(email)) {
-            etEmail.setError("Email is required");
-            etEmail.requestFocus();
-            return;
-        }
-
-        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            etEmail.setError("Enter a valid email");
-            etEmail.requestFocus();
-            return;
-        }
-
-        if (TextUtils.isEmpty(password)) {
-            etPassword.setError("Password is required");
-            etPassword.requestFocus();
-            return;
-        }
-
-        if (password.length() < 6) {
-            etPassword.setError("Password must be at least 6 characters");
-            etPassword.requestFocus();
-            return;
-        }
-
-        if (!password.equals(confirmPassword)) {
-            etConfirmPassword.setError("Passwords don't match");
-            etConfirmPassword.requestFocus();
-            return;
-        }
-
-        if (TextUtils.isEmpty(contact)) {
-            etContact.setError("Contact number is required");
-            etContact.requestFocus();
-            return;
-        }
-
-        if (TextUtils.isEmpty(address)) {
-            etAddress.setError("Address is required");
-            etAddress.requestFocus();
+        if (!validateInputs(firstName, lastName, email, password, confirmPassword, contact, address)) {
             return;
         }
 
         // Check if email already exists
-        if (databaseHelper.checkAdmin(email, password)) {
+        if (databaseHelper.checkAdminExists(email)) {
             etEmail.setError("Email already registered");
             etEmail.requestFocus();
             return;
@@ -118,13 +64,70 @@ public class AdminRegister extends AppCompatActivity {
 
         if (id > 0) {
             Toast.makeText(this, "Admin registered successfully", Toast.LENGTH_SHORT).show();
-            clearForm(); // Clear the form after successful registration
+            clearForm();
         } else {
             Toast.makeText(this, "Registration failed", Toast.LENGTH_SHORT).show();
         }
     }
 
-    // Method to clear all input fields
+    private boolean validateInputs(String firstName, String lastName, String email,
+                                   String password, String confirmPassword,
+                                   String contact, String address) {
+        boolean valid = true;
+
+        if (TextUtils.isEmpty(firstName)) {
+            etFirstName.setError("First name is required");
+            etFirstName.requestFocus();
+            valid = false;
+        }
+
+        if (TextUtils.isEmpty(lastName)) {
+            etLastName.setError("Last name is required");
+            etLastName.requestFocus();
+            valid = false;
+        }
+
+        if (TextUtils.isEmpty(email)) {
+            etEmail.setError("Email is required");
+            etEmail.requestFocus();
+            valid = false;
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            etEmail.setError("Enter a valid email");
+            etEmail.requestFocus();
+            valid = false;
+        }
+
+        if (TextUtils.isEmpty(password)) {
+            etPassword.setError("Password is required");
+            etPassword.requestFocus();
+            valid = false;
+        } else if (password.length() < 6) {
+            etPassword.setError("Password must be at least 6 characters");
+            etPassword.requestFocus();
+            valid = false;
+        }
+
+        if (!password.equals(confirmPassword)) {
+            etConfirmPassword.setError("Passwords don't match");
+            etConfirmPassword.requestFocus();
+            valid = false;
+        }
+
+        if (TextUtils.isEmpty(contact)) {
+            etContact.setError("Contact number is required");
+            etContact.requestFocus();
+            valid = false;
+        }
+
+        if (TextUtils.isEmpty(address)) {
+            etAddress.setError("Address is required");
+            etAddress.requestFocus();
+            valid = false;
+        }
+
+        return valid;
+    }
+
     private void clearForm() {
         etFirstName.setText("");
         etLastName.setText("");
@@ -134,7 +137,7 @@ public class AdminRegister extends AppCompatActivity {
         etContact.setText("");
         etAddress.setText("");
 
-        // Clear any error messages
+        // Clear errors
         etFirstName.setError(null);
         etLastName.setError(null);
         etEmail.setError(null);
@@ -143,7 +146,6 @@ public class AdminRegister extends AppCompatActivity {
         etContact.setError(null);
         etAddress.setError(null);
 
-        // Return focus to the first field
         etFirstName.requestFocus();
     }
 
