@@ -16,14 +16,14 @@ import java.util.List;
 
 public class StudentRegister extends AppCompatActivity {
 
-    ImageView imageView;
-    TextView photoText;
-    FrameLayout photoFrame;
-
+    private ImageView imageView;
+    private TextView photoText;
+    private FrameLayout photoFrame;
     private EditText etFirstName, etLastName, etEmail, etPassword, etConfirmPassword, etContact, etAddress;
     private CheckBox chkBio, chkMath, chkPhys, chkChem, chkICT, chkBS, chkEcon, chkAcc, chkEng, chkFrench, chkLit;
     private Button btnRegister;
     private DatabaseHelper dbHelper;
+    private Bitmap studentPhoto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +31,11 @@ public class StudentRegister extends AppCompatActivity {
         setContentView(R.layout.activity_student_register);
 
         dbHelper = new DatabaseHelper(this);
+        initializeViews();
+        setupPhotoCapture();
+    }
 
-        // Initialize views
+    private void initializeViews() {
         etFirstName = findViewById(R.id.etFirstName);
         etLastName = findViewById(R.id.etLastName);
         etEmail = findViewById(R.id.etEmail);
@@ -41,7 +44,6 @@ public class StudentRegister extends AppCompatActivity {
         etContact = findViewById(R.id.etContact);
         etAddress = findViewById(R.id.etAddress);
 
-        // Initialize checkboxes
         chkBio = findViewById(R.id.chkBio);
         chkMath = findViewById(R.id.chkMath);
         chkPhys = findViewById(R.id.chkPhys);
@@ -55,21 +57,23 @@ public class StudentRegister extends AppCompatActivity {
         chkLit = findViewById(R.id.chkLit);
 
         btnRegister = findViewById(R.id.btnRegister);
-
         imageView = findViewById(R.id.studImageView);
         photoText = findViewById(R.id.photo_text);
         photoFrame = findViewById(R.id.studPhotoFrame);
 
-        btnRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                registerStudent();
-            }
+        btnRegister.setOnClickListener(v -> registerStudent());
+    }
+
+    private void setupPhotoCapture() {
+        photoFrame.setOnClickListener(v -> {
+            // Implement your photo capture logic here
+            // For example:
+            // Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            // startActivityForResult(cameraIntent, REQUEST_IMAGE_CAPTURE);
         });
     }
 
     private void registerStudent() {
-        // Get input values
         String firstName = etFirstName.getText().toString().trim();
         String lastName = etLastName.getText().toString().trim();
         String email = etEmail.getText().toString().trim();
@@ -78,73 +82,82 @@ public class StudentRegister extends AppCompatActivity {
         String contact = etContact.getText().toString().trim();
         String address = etAddress.getText().toString().trim();
 
-        // Validate inputs
-        if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() ||
-                password.isEmpty() || confirmPassword.isEmpty()) {
-            Toast.makeText(this, "Please fill all required fields", Toast.LENGTH_SHORT).show();
+        if (!validateInputs(firstName, lastName, email, password, confirmPassword, contact, address)) {
             return;
         }
 
-        if (!password.equals(confirmPassword)) {
-            Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        // Get selected courses
-        List<Integer> selectedCourseIds = getSelectedCourseIds();
-
-        if (selectedCourseIds.isEmpty()) {
+        List<String> selectedCourses = getSelectedCourseNames();
+        if (selectedCourses.isEmpty()) {
             Toast.makeText(this, "Please select at least one course", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // For photo, you would typically get it from an ImageView
-        // Here we're just using null - you should implement proper photo handling
-        byte[] photo = null; // Implement photo capture from your UI
+        byte[] photoBytes = studentPhoto != null ? DatabaseHelper.getBytesFromBitmap(studentPhoto) : null;
 
-        // Add student to database
         long studentId = dbHelper.addStudent(firstName, lastName, email, password,
-                contact, address, photo, selectedCourseIds);
+                contact, address, photoBytes, selectedCourses);
 
         if (studentId != -1) {
             Toast.makeText(this, "Registration successful!", Toast.LENGTH_SHORT).show();
             clearForm();
-
         } else {
             Toast.makeText(this, "Registration failed. Email may already exist.", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private List<Integer> getSelectedCourseIds() {
-        List<Integer> courseIds = new ArrayList<>();
-        List<DatabaseHelper.Course> allCourses = dbHelper.getAllCourses();
-
-        // This assumes the checkboxes are in the same order as the courses in the database
-        // You might need a more robust matching system
-        if (chkBio.isChecked()) courseIds.add(allCourses.get(0).getId());
-        if (chkMath.isChecked()) courseIds.add(allCourses.get(1).getId());
-        if (chkPhys.isChecked()) courseIds.add(allCourses.get(2).getId());
-        if (chkChem.isChecked()) courseIds.add(allCourses.get(3).getId());
-        if (chkICT.isChecked()) courseIds.add(allCourses.get(4).getId());
-        if (chkBS.isChecked()) courseIds.add(allCourses.get(5).getId());
-        if (chkEcon.isChecked()) courseIds.add(allCourses.get(6).getId());
-        if (chkAcc.isChecked()) courseIds.add(allCourses.get(7).getId());
-        if (chkEng.isChecked()) courseIds.add(allCourses.get(8).getId());
-        if (chkFrench.isChecked()) courseIds.add(allCourses.get(9).getId());
-        if (chkLit.isChecked()) courseIds.add(allCourses.get(10).getId());
-
-        return courseIds;
+    private boolean validateInputs(String firstName, String lastName, String email,
+                                   String password, String confirmPassword,
+                                   String contact, String address) {
+        if (firstName.isEmpty()) {
+            etFirstName.setError("First name is required");
+            return false;
+        }
+        if (lastName.isEmpty()) {
+            etLastName.setError("Last name is required");
+            return false;
+        }
+        if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            etEmail.setError("Valid email is required");
+            return false;
+        }
+        if (password.isEmpty() || password.length() < 6) {
+            etPassword.setError("Password must be at least 6 characters");
+            return false;
+        }
+        if (!password.equals(confirmPassword)) {
+            etConfirmPassword.setError("Passwords don't match");
+            return false;
+        }
+        if (contact.isEmpty()) {
+            etContact.setError("Contact number is required");
+            return false;
+        }
+        if (address.isEmpty()) {
+            etAddress.setError("Address is required");
+            return false;
+        }
+        return true;
     }
 
-    @Override
-    protected void onDestroy() {
-        dbHelper.close();
-        super.onDestroy();
+    private List<String> getSelectedCourseNames() {
+        List<String> courseNames = new ArrayList<>();
+
+        if (chkBio.isChecked()) courseNames.add("Biology");
+        if (chkMath.isChecked()) courseNames.add("Combined Maths");
+        if (chkPhys.isChecked()) courseNames.add("Physics");
+        if (chkChem.isChecked()) courseNames.add("Chemistry");
+        if (chkICT.isChecked()) courseNames.add("ICT");
+        if (chkBS.isChecked()) courseNames.add("Business Studies");
+        if (chkEcon.isChecked()) courseNames.add("Economics");
+        if (chkAcc.isChecked()) courseNames.add("Accounting");
+        if (chkEng.isChecked()) courseNames.add("English");
+        if (chkFrench.isChecked()) courseNames.add("French");
+        if (chkLit.isChecked()) courseNames.add("English Literature");
+
+        return courseNames;
     }
 
-    // Add this new method to clear all fields
     private void clearForm() {
-        // Clear all EditText fields
         etFirstName.setText("");
         etLastName.setText("");
         etEmail.setText("");
@@ -153,7 +166,6 @@ public class StudentRegister extends AppCompatActivity {
         etContact.setText("");
         etAddress.setText("");
 
-        // Uncheck all checkboxes
         chkBio.setChecked(false);
         chkMath.setChecked(false);
         chkPhys.setChecked(false);
@@ -166,9 +178,14 @@ public class StudentRegister extends AppCompatActivity {
         chkFrench.setChecked(false);
         chkLit.setChecked(false);
 
-        // Reset photo
+        studentPhoto = null;
         imageView.setImageBitmap(null);
-        imageView.setVisibility(View.GONE);
         photoText.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    protected void onDestroy() {
+        dbHelper.close();
+        super.onDestroy();
     }
 }

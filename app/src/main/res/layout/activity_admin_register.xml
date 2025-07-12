@@ -41,7 +41,9 @@
                 android:hint="First Name"
                 android:background="@drawable/edit_text_background"
                 android:padding="12dp"
-                android:layout_marginBottom="12dp"/>
+                android:layout_marginBottom="12dp"
+                android:id="@+id/etFirstName"/>
+
 
             <EditText
                 android:layout_width="match_parent"
@@ -49,7 +51,8 @@
                 android:hint="Last Name"
                 android:background="@drawable/edit_text_background"
                 android:padding="12dp"
-                android:layout_marginBottom="12dp"/>
+                android:layout_marginBottom="12dp"
+                android:id="@+id/etLastName"/>
 
             <EditText
                 android:layout_width="match_parent"
@@ -58,7 +61,8 @@
                 android:inputType="textEmailAddress"
                 android:background="@drawable/edit_text_background"
                 android:padding="12dp"
-                android:layout_marginBottom="12dp"/>
+                android:layout_marginBottom="12dp"
+                android:id="@+id/etEmail"/>
 
             <EditText
                 android:layout_width="match_parent"
@@ -67,7 +71,8 @@
                 android:inputType="textPassword"
                 android:background="@drawable/edit_text_background"
                 android:padding="12dp"
-                android:layout_marginBottom="12dp"/>
+                android:layout_marginBottom="12dp"
+                android:id="@+id/etPassword"/>
 
             <EditText
                 android:layout_width="match_parent"
@@ -76,7 +81,8 @@
                 android:inputType="textPassword"
                 android:background="@drawable/edit_text_background"
                 android:padding="12dp"
-                android:layout_marginBottom="12dp"/>
+                android:layout_marginBottom="12dp"
+                android:id="@+id/etConfirmPassword"/>
 
             <EditText
                 android:layout_width="match_parent"
@@ -85,7 +91,8 @@
                 android:inputType="phone"
                 android:background="@drawable/edit_text_background"
                 android:padding="12dp"
-                android:layout_marginBottom="12dp"/>
+                android:layout_marginBottom="12dp"
+                android:id="@+id/etContact"/>
 
             <EditText
                 android:layout_width="match_parent"
@@ -93,7 +100,8 @@
                 android:hint="Address"
                 android:background="@drawable/edit_text_background"
                 android:padding="12dp"
-                android:layout_marginBottom="24dp"/>
+                android:layout_marginBottom="24dp"
+                android:id="@+id/etAddress"/>
         </LinearLayout>
     </ScrollView>
 
@@ -115,6 +123,7 @@
             android:text="Register"
             android:textColor="#FFFFFF"
             android:textStyle="bold"
+            android:id="@+id/btnRegister"
             />
 
     </LinearLayout>
