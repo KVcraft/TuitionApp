@@ -5,107 +5,112 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     tools:context=".TeacherLogin">
 
-    <!-- Top Rounded Header -->
+    <!-- Top Header -->
     <LinearLayout
-        android:layout_width="438dp"
+        android:layout_width="match_parent"
         android:layout_height="100dp"
         android:background="@drawable/top_bottom_gradient"
         android:gravity="center_vertical"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingHorizontal="16dp">
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="match_parent"
+            android:layout_width="24dp"
             android:layout_height="24dp"
             android:contentDescription="Back"
             android:src="@drawable/ic_back"
             app:tint="#FFFFFF"
-            android:layout_marginRight="340dp"
             android:onClick="Welcome"/>
-
-
     </LinearLayout>
 
-    <!-- White Background Body -->
-
-    <!-- Bottom Gradient Footer -->
-
+    <!-- Main Content -->
     <LinearLayout
-        android:layout_width="433dp"
-        android:layout_height="464dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
         android:background="@android:color/white"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="24dp">
+        android:padding="32dp">
 
         <!-- Profile Image -->
         <ImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_gravity="center"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="32dp"
             android:background="@drawable/circle_gray"
             android:scaleType="centerInside"
             android:src="@drawable/ic_user_placeholder" />
 
-        <!-- Email Input -->
-        <EditText
+        <!-- Student ID Input -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:background="@drawable/rounded_edittext"
-            android:hint="Email"
-            android:padding="12dp"
-            android:textColorHint="#808080" />
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Student ID"
+                android:textColor="#808080"
+                android:textSize="14sp"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/rounded_edittext"
+                android:paddingHorizontal="16dp"
+                android:textColor="@color/black"
+                android:textColorHint="#808080"/>
+        </LinearLayout>
 
         <!-- Password Input -->
-        <EditText
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:background="@drawable/rounded_edittext"
-            android:hint="Password"
-            android:inputType="textPassword"
-            android:padding="12dp"
-            android:textColorHint="#808080" />
+            android:layout_marginBottom="32dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Password"
+                android:textColor="#808080"
+                android:textSize="14sp"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/rounded_edittext"
+                android:inputType="textPassword"
+                android:paddingHorizontal="16dp"
+                android:textColorHint="#808080"
+                android:textColor="@color/black"/>
+        </LinearLayout>
 
         <!-- Login Button -->
-        <androidx.appcompat.widget.AppCompatButton
+        <Button
             android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@drawable/blue_btn"
-            android:padding="12dp"
+            android:layout_height="48dp"
+            android:backgroundTint="#004AAD"
             android:text="Login"
+            android:textAllCaps="false"
             android:textColor="#FFFFFF"
-            android:textStyle="bold"
-            android:onClick="DashboardAdmin"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="Sign up"
-            android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:onClick="SignUp"
-            android:paddingTop="15dp"/>
+            android:onClick="DashboardAdmin"/>
     </LinearLayout>
 
+    <!-- Footer -->
     <LinearLayout
-        android:layout_width="448dp"
+        android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:background="@drawable/top_bottom_gradient"
-        android:gravity="center"
-        android:orientation="vertical">
-
-
-
+        android:background="@drawable/top_bottom_gradient">
     </LinearLayout>
 
 </LinearLayout>
