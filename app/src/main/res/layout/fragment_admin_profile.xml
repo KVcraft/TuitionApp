@@ -12,37 +12,39 @@
         android:layout_height="match_parent"
         android:fillViewport="true">
 
+        <!-- Main centered container -->
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:gravity="center_horizontal"
+            android:layout_gravity="center"
             android:padding="24dp">
 
-            <!-- Profile Header -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="32dp"
-                android:text="Admin Profile"
-                android:textColor="#000000"
-                android:textSize="24sp"
-                android:textStyle="bold" />
-
-            <!-- First Name -->
+            <!-- Profile container with all fields -->
             <LinearLayout
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginBottom="16dp"
                 android:gravity="center_horizontal">
 
+                <!-- Profile Header -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="Admin Profile"
+                    android:textColor="#000000"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="32dp"/>
+
+                <!-- First Name -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:text="First Name"
                     android:textColor="#808080"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp"
+                    android:layout_marginBottom="4dp"/>
 
                 <TextView
                     android:id="@+id/tvFirstName"
@@ -50,24 +52,16 @@
                     android:layout_height="wrap_content"
                     android:textColor="#000000"
                     android:textSize="16sp"
-                    android:paddingTop="4dp"
-                    android:gravity="center"/>
-            </LinearLayout>
+                    android:layout_marginBottom="16dp"/>
 
-            <!-- Last Name -->
-            <LinearLayout
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginBottom="16dp"
-                android:gravity="center_horizontal">
-
+                <!-- Last Name -->
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Last Name"
                     android:textColor="#808080"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp"
+                    android:layout_marginBottom="4dp"/>
 
                 <TextView
                     android:id="@+id/tvLastName"
@@ -75,24 +69,16 @@
                     android:layout_height="wrap_content"
                     android:textColor="#000000"
                     android:textSize="16sp"
-                    android:paddingTop="4dp"
-                    android:gravity="center"/>
-            </LinearLayout>
+                    android:layout_marginBottom="16dp"/>
 
-            <!-- Email -->
-            <LinearLayout
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginBottom="16dp"
-                android:gravity="center_horizontal">
-
+                <!-- Email -->
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Email"
                     android:textColor="#808080"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp"
+                    android:layout_marginBottom="4dp"/>
 
                 <TextView
                     android:id="@+id/tvEmail"
@@ -100,24 +86,16 @@
                     android:layout_height="wrap_content"
                     android:textColor="#000000"
                     android:textSize="16sp"
-                    android:paddingTop="4dp"
-                    android:gravity="center"/>
-            </LinearLayout>
+                    android:layout_marginBottom="16dp"/>
 
-            <!-- Contact Number -->
-            <LinearLayout
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginBottom="16dp"
-                android:gravity="center_horizontal">
-
+                <!-- Contact Number -->
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Contact Number"
                     android:textColor="#808080"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp"
+                    android:layout_marginBottom="4dp"/>
 
                 <TextView
                     android:id="@+id/tvContactNo"
@@ -125,24 +103,16 @@
                     android:layout_height="wrap_content"
                     android:textColor="#000000"
                     android:textSize="16sp"
-                    android:paddingTop="4dp"
-                    android:gravity="center"/>
-            </LinearLayout>
+                    android:layout_marginBottom="16dp"/>
 
-            <!-- Address -->
-            <LinearLayout
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginBottom="24dp"
-                android:gravity="center_horizontal">
-
+                <!-- Address -->
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Address"
                     android:textColor="#808080"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp"
+                    android:layout_marginBottom="4dp"/>
 
                 <TextView
                     android:id="@+id/tvAddress"
@@ -150,8 +120,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="#000000"
                     android:textSize="16sp"
-                    android:paddingTop="4dp"
-                    android:gravity="center"/>
+                    android:layout_marginBottom="24dp"/>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
