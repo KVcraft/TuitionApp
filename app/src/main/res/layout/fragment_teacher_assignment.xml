@@ -3,12 +3,195 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TeacherAssignmentFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".TeacherAssignmentFragment"
+    android:background="#FFFF">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:fillViewport="true"
+        android:paddingBottom="30dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <!-- Assignment Header -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Assignments"
+                android:textColor="#000000"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                android:layout_marginBottom="24dp"/>
+
+            <!-- Session Selection -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginBottom="16dp"
+                app:hintTextColor="#3F51B5"
+                app:boxStrokeColor="#3F51B5">
+
+                <AutoCompleteTextView
+                    android:id="@+id/sessionSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Select Session"
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    android:padding="16dp"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Session Date -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginBottom="16dp"
+                app:hintTextColor="#3F51B5"
+                app:boxStrokeColor="#3F51B5">
+
+                <EditText
+                    android:id="@+id/sessionDatePicker"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Select Date of Session"
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    android:padding="16dp"
+                    android:inputType="none"
+                    android:focusable="false"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Session Time -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginBottom="16dp"
+                app:hintTextColor="#3F51B5"
+                app:boxStrokeColor="#3F51B5">
+
+                <EditText
+                    android:id="@+id/sessionTimePicker"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Select Time"
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    android:padding="16dp"
+                    android:inputType="none"
+                    android:focusable="false"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Open Date/Time -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginBottom="16dp"
+                app:hintTextColor="#3F51B5"
+                app:boxStrokeColor="#3F51B5">
+
+                <EditText
+                    android:id="@+id/openDateTimePicker"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Open Date and Time"
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    android:padding="16dp"
+                    android:inputType="none"
+                    android:focusable="false"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Due Date/Time -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginBottom="16dp"
+                app:hintTextColor="#3F51B5"
+                app:boxStrokeColor="#3F51B5">
+
+                <EditText
+                    android:id="@+id/dueDateTimePicker"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Due Date and Time"
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    android:padding="16dp"
+                    android:inputType="none"
+                    android:focusable="false"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- File Upload Area - Pure XML version -->
+            <LinearLayout
+                android:id="@+id/uploadArea"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="#E8EAF6"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_marginBottom="16dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="+"
+                    android:textColor="#3F51B5"
+                    android:textSize="36sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Click to browse files"
+                    android:textColor="#757575"
+                    android:textSize="14sp"
+                    android:layout_marginTop="8dp"/>
+            </LinearLayout>
+
+
+
+
+
+            <!-- Add Assignment Button -->
+            <Button
+                android:id="@+id/addAssignmentButton"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="Add Assignment"
+                android:backgroundTint="#3F51B5"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- Delete Assignment Button -->
+            <Button
+                android:id="@+id/deleteAssignmentButton"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="Delete Assignment"
+                android:backgroundTint="#F44336"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- View Submissions Button -->
+            <Button
+                android:id="@+id/viewSubmissionsButton"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="View Submitted Assignments"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"/>
+        </LinearLayout>
+    </ScrollView>
 
 </FrameLayout>
