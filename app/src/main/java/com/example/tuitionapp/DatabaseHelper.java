@@ -1,6 +1,5 @@
 package com.example.tuitionapp;
 
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -18,35 +17,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Students table
     public static final String TABLE_STUDENTS = "Students";
-
-import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-
-public class DatabaseHelper extends SQLiteOpenHelper {
-
-    private static String dbName = "tuitiondb";
-    private static int dbVersion = 1;
-
-    // Table name
-    public static final String TABLE_STUDENTS = "Students";
-
-    // Column names
-
     public static final String COLUMN_ID = "id";
     public static final String COLUMN_FIRSTNAME = "firstname";
     public static final String COLUMN_LASTNAME = "lastname";
     public static final String COLUMN_EMAIL = "email";
     public static final String COLUMN_PASSWORD = "password";
-
-    public static final String COLUMN_CONTACT = "contact_number";
-
     public static final String COLUMN_CONTACT_NUMBER = "contact_number";
-
     public static final String COLUMN_ADDRESS = "address";
     public static final String COLUMN_PHOTO = "photo";
     public static final String COLUMN_QR_CODE = "qr_code";
-
 
     // Courses table
     public static final String TABLE_COURSES = "Courses";
@@ -59,25 +38,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_COURSE_ID_FK = "course_id";
 
     // Create tables SQL
-
-    // Create table SQL query
-
     private static final String CREATE_TABLE_STUDENTS = "CREATE TABLE " + TABLE_STUDENTS + "("
             + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + COLUMN_FIRSTNAME + " TEXT NOT NULL,"
             + COLUMN_LASTNAME + " TEXT NOT NULL,"
             + COLUMN_EMAIL + " TEXT UNIQUE NOT NULL,"
             + COLUMN_PASSWORD + " TEXT NOT NULL,"
-
-            + COLUMN_CONTACT + " TEXT,"
-
             + COLUMN_CONTACT_NUMBER + " TEXT,"
-
             + COLUMN_ADDRESS + " TEXT,"
             + COLUMN_PHOTO + " BLOB,"
             + COLUMN_QR_CODE + " TEXT"
             + ")";
-
 
     private static final String CREATE_TABLE_COURSES = "CREATE TABLE " + TABLE_COURSES + "("
             + COLUMN_COURSE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -101,7 +72,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_STUDENTS);
         db.execSQL(CREATE_TABLE_COURSES);
         db.execSQL(CREATE_TABLE_STUDENT_COURSES);
-        insertDefaultCourses(db); // Insert default courses when database is created
+        insertDefaultCourses(db);
     }
 
     @Override
@@ -112,7 +83,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    // Insert default courses
     private void insertDefaultCourses(SQLiteDatabase db) {
         String[] courses = {
                 "Biology", "Combined Maths", "Physics", "Chemistry", "ICT",
@@ -127,39 +97,39 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    // Method to add a new student
     public long addStudent(String firstName, String lastName, String email, String password,
                            String contact, String address, byte[] photo, List<Integer> courseIds) {
         SQLiteDatabase db = this.getWritableDatabase();
+        long studentId = -1;
 
-        // Insert student data
-        ContentValues studentValues = new ContentValues();
-        studentValues.put(COLUMN_FIRSTNAME, firstName);
-        studentValues.put(COLUMN_LASTNAME, lastName);
-        studentValues.put(COLUMN_EMAIL, email);
-        studentValues.put(COLUMN_PASSWORD, password);
-        studentValues.put(COLUMN_CONTACT, contact);
-        studentValues.put(COLUMN_ADDRESS, address);
-        studentValues.put(COLUMN_PHOTO, photo);
-        // QR code can be generated later and updated
+        try {
+            // Insert student data
+            ContentValues studentValues = new ContentValues();
+            studentValues.put(COLUMN_FIRSTNAME, firstName);
+            studentValues.put(COLUMN_LASTNAME, lastName);
+            studentValues.put(COLUMN_EMAIL, email);
+            studentValues.put(COLUMN_PASSWORD, password);
+            studentValues.put(COLUMN_CONTACT_NUMBER, contact);
+            studentValues.put(COLUMN_ADDRESS, address);
+            studentValues.put(COLUMN_PHOTO, photo);
 
-        long studentId = db.insert(TABLE_STUDENTS, null, studentValues);
+            studentId = db.insert(TABLE_STUDENTS, null, studentValues);
 
-        // Insert student-course relationships if student was added successfully
-        if (studentId != -1 && courseIds != null && !courseIds.isEmpty()) {
-            for (int courseId : courseIds) {
-                ContentValues scValues = new ContentValues();
-                scValues.put(COLUMN_STUDENT_ID, studentId);
-                scValues.put(COLUMN_COURSE_ID_FK, courseId);
-                db.insert(TABLE_STUDENT_COURSES, null, scValues);
+            // Insert student-course relationships
+            if (studentId != -1 && courseIds != null && !courseIds.isEmpty()) {
+                for (int courseId : courseIds) {
+                    ContentValues scValues = new ContentValues();
+                    scValues.put(COLUMN_STUDENT_ID, studentId);
+                    scValues.put(COLUMN_COURSE_ID_FK, courseId);
+                    db.insert(TABLE_STUDENT_COURSES, null, scValues);
+                }
             }
+        } finally {
+            db.close();
         }
-
-        db.close();
         return studentId;
     }
 
-    // Helper method to convert Bitmap to byte array
     public static byte[] getBytesFromBitmap(Bitmap bitmap) {
         if (bitmap == null) return null;
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -167,60 +137,43 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return stream.toByteArray();
     }
 
-    // Helper method to convert byte array to Bitmap
     public static Bitmap getBitmapFromBytes(byte[] image) {
         if (image == null) return null;
         return BitmapFactory.decodeByteArray(image, 0, image.length);
     }
 
-    // Get all courses
     public List<Course> getAllCourses() {
         List<Course> courses = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(TABLE_COURSES,
-                new String[]{COLUMN_COURSE_ID, COLUMN_COURSE_NAME},
-                null, null, null, null, COLUMN_COURSE_NAME + " ASC");
+        Cursor cursor = null;
 
-        if (cursor.moveToFirst()) {
-            do {
-                Course course = new Course();
-                course.setId(cursor.getInt(cursor.getColumnIndex(COLUMN_COURSE_ID)));
-                course.setName(cursor.getString(cursor.getColumnIndex(COLUMN_COURSE_NAME)));
-                courses.add(course);
-            } while (cursor.moveToNext());
+        try {
+            cursor = db.query(TABLE_COURSES,
+                    new String[]{COLUMN_COURSE_ID, COLUMN_COURSE_NAME},
+                    null, null, null, null, COLUMN_COURSE_NAME + " ASC");
+
+            if (cursor != null && cursor.moveToFirst()) {
+                do {
+                    Course course = new Course();
+                    course.setId(cursor.getInt(cursor.getColumnIndex(COLUMN_COURSE_ID)));
+                    course.setName(cursor.getString(cursor.getColumnIndex(COLUMN_COURSE_NAME)));
+                    courses.add(course);
+                } while (cursor.moveToNext());
+            }
+        } finally {
+            if (cursor != null) cursor.close();
+            db.close();
         }
-        cursor.close();
-        db.close();
         return courses;
     }
 
-    // Course model class
     public static class Course {
         private int id;
         private String name;
 
-        // Getters and setters
         public int getId() { return id; }
         public void setId(int id) { this.id = id; }
         public String getName() { return name; }
         public void setName(String name) { this.name = name; }
-
-    public DatabaseHelper(Context context) {
-        super(context, dbName, null, dbVersion);
-    }
-
-    @Override
-    public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        // Create Students table
-        sqLiteDatabase.execSQL(CREATE_TABLE_STUDENTS);
-    }
-
-    @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
-        // Drop older table if existed
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_STUDENTS);
-        // Create tables again
-        onCreate(sqLiteDatabase);
-
     }
 }

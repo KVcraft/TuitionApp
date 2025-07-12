@@ -26,6 +26,9 @@
             android:name=".StudentDashboard"
             android:exported="true" />
         <activity
+            android:name=".AdminRegister"
+            android:exported="true" />
+        <activity
             android:name=".AdminNav"
             android:exported="false"
             android:theme="@style/Theme.TuitionApp" />
