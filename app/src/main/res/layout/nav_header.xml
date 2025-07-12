@@ -3,7 +3,7 @@
     android:layout_height="160dp"
     android:gravity="center_vertical"
     android:orientation="vertical"
-    android:background="@android:color/transparent"
+    android:background="@drawable/blue_gradient"
     android:padding="16dp">
 
     <TextView
