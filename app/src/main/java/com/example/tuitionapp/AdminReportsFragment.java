@@ -1,5 +1,7 @@
 package com.example.tuitionapp;
 
+import android.annotation.SuppressLint;
+import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,58 +9,61 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link AdminReportsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class AdminReportsFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public AdminReportsFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment AdminReportsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static AdminReportsFragment newInstance(String param1, String param2) {
-        AdminReportsFragment fragment = new AdminReportsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+    private TextView reportsContent;
+    private DatabaseHelper dbHelper;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_admin_reports, container, false);
+        View view = inflater.inflate(R.layout.fragment_admin_reports, container, false);
+
+        // Initialize views and database helper
+        reportsContent = view.findViewById(R.id.reportsContent);
+        dbHelper = new DatabaseHelper(getContext());
+
+        // Load and display reports
+        loadReports();
+
+        return view;
+    }
+
+    private void loadReports() {
+        // Get all reports from database
+        Cursor cursor = dbHelper.getAllReports();
+
+        if (cursor != null && cursor.getCount() > 0) {
+            StringBuilder reportsBuilder = new StringBuilder();
+
+            while (cursor.moveToNext()) {
+                // Adjust these column names to match your database schema
+                @SuppressLint("Range") String reportType = cursor.getString(cursor.getColumnIndex("report_type"));
+                @SuppressLint("Range") String dateRange = cursor.getString(cursor.getColumnIndex("date_range"));
+                @SuppressLint("Range") String course = cursor.getString(cursor.getColumnIndex("course"));
+                @SuppressLint("Range") String content = cursor.getString(cursor.getColumnIndex("content"));
+
+                reportsBuilder.append("Report Type: ").append(reportType).append("\n")
+                        .append("Course: ").append(course).append("\n")
+                        .append("Date Range: ").append(dateRange).append("\n\n")
+                        .append(content).append("\n\n")
+                        .append("--------------------------------\n\n");
+            }
+
+            reportsContent.setText(reportsBuilder.toString());
+            cursor.close();
+        } else {
+            reportsContent.setText("No reports generated yet.");
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        if (dbHelper != null) {
+            dbHelper.close();
+        }
+        super.onDestroy();
     }
 }
