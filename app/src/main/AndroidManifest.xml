@@ -19,14 +19,18 @@
         android:theme="@style/Theme.TuitionApp"
         tools:targetApi="31">
         <activity
+
             android:name=".TeacherScanQR"
+
+            android:name=".StudentGenerateQR"
+
             android:exported="true" />
         <activity
             android:name=".TeacherLogin"
             android:exported="true" />
         <activity
             android:name=".StudentLogin"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".TeacherDashboard"
             android:exported="true"
@@ -56,7 +60,7 @@
             android:exported="true" />
         <activity
             android:name=".AdminLogin"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

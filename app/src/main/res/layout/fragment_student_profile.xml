@@ -3,7 +3,8 @@
     android:id="@+id/student_profile_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF">
+    android:background="#FFFFFF"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -41,12 +42,14 @@
                 android:text="First Name"
                 android:textStyle="bold"
                 android:textSize="16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp" />
             <TextView
                 android:id="@+id/textFirstName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="John"
+                android:text="N/A"
                 android:padding="12dp"
                 android:background="@drawable/rounded_edittext"
                 android:layout_marginBottom="12dp" />
@@ -55,12 +58,14 @@
                 android:text="Last Name"
                 android:textStyle="bold"
                 android:textSize="16sp"
-                android:layout_marginBottom="4dp" />
+                android:layout_marginBottom="4dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
             <TextView
                 android:id="@+id/textLastName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Doe"
+                android:text="N/A"
                 android:padding="12dp"
                 android:background="@drawable/rounded_edittext"
                 android:layout_marginBottom="12dp" />
@@ -69,12 +74,14 @@
                 android:text="Email"
                 android:textStyle="bold"
                 android:textSize="16sp"
-                android:layout_marginBottom="4dp" />
+                android:layout_marginBottom="4dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
             <TextView
                 android:id="@+id/textEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="john@example.com"
+                android:text="N/A"
                 android:padding="12dp"
                 android:background="@drawable/rounded_edittext"
                 android:layout_marginBottom="12dp" />
@@ -83,12 +90,14 @@
                 android:text="Contact No"
                 android:textStyle="bold"
                 android:textSize="16sp"
-                android:layout_marginBottom="4dp" />
+                android:layout_marginBottom="4dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
             <TextView
                 android:id="@+id/textContact"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="+94 712345678"
+                android:text="N/A"
                 android:padding="12dp"
                 android:background="@drawable/rounded_edittext"
                 android:layout_marginBottom="12dp" />
@@ -97,12 +106,14 @@
                 android:text="Address"
                 android:textStyle="bold"
                 android:textSize="16sp"
-                android:layout_marginBottom="4dp" />
+                android:layout_marginBottom="4dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
             <TextView
                 android:id="@+id/textAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="123, Main Street, Colombo"
+                android:text="N/A"
                 android:padding="12dp"
                 android:background="@drawable/rounded_edittext"
                 android:layout_marginBottom="20dp" />
@@ -111,12 +122,14 @@
                 android:text="Enrolled Courses"
                 android:textStyle="bold"
                 android:textSize="16sp"
-                android:layout_marginBottom="4dp" />
+                android:layout_marginBottom="4dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
             <TextView
                 android:id="@+id/textCourses"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Biology, Physics, Chemistry"
+                android:text="N/A"
                 android:padding="12dp"
                 android:background="@drawable/rounded_edittext"
                 android:layout_marginBottom="20dp" />
