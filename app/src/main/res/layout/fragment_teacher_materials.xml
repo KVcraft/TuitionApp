@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AttendanceFragment"
-    android:id="@+id/admin_nav_attendance">
+    tools:context=".TeacherMaterialsFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
