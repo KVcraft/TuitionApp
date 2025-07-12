@@ -51,7 +51,8 @@
             android:padding="12dp"
             android:layout_marginBottom="20dp"
             android:elevation="0dp"
-            android:stateListAnimator="@null" />
+            android:stateListAnimator="@null"
+            android:onClick="loginStudent"/>
 
 
         <!-- Teacher Button -->
@@ -65,7 +66,8 @@
             android:padding="12dp"
             android:layout_marginBottom="20dp"
             android:elevation="0dp"
-            android:stateListAnimator="@null" />
+            android:stateListAnimator="@null"
+            android:onClick="loginTeacher"/>
 
 
         <!-- Admin Button -->
